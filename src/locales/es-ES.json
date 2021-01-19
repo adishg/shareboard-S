@@ -199,6 +199,7 @@
   "errorDialog": {
     "title": "Error"
   },
+<<<<<<< HEAD
   "helpDialog": {
     "blog": "Lee nuestro blog",
     "click": "click",
@@ -219,6 +220,26 @@
     "view": "Vista",
     "zoomToFit": "Ajustar la vista para mostrar todos los elementos",
     "zoomToSelection": "Hacer zoom a la selección"
+=======
+  "shortcutsDialog": {
+    "title": "Atajos del teclado",
+    "shapes": "Formas",
+    "or": "o",
+    "click": "clic",
+    "drag": "arrastrar",
+    "curvedArrow": "Flecha curvada",
+    "curvedLine": "Línea curva",
+    "editor": "Editor",
+    "view": "Vista",
+    "blog": "Lee nuestro blog",
+    "howto": "Siga nuestras guías",
+    "github": "¿Has encontrado un problema? Envíalo",
+    "textNewLine": "Añadir nueva línea (texto)",
+    "textFinish": "Finalizar edición (texto)",
+    "zoomToFit": "Ajustar la vista para mostrar todos los elementos",
+    "zoomToSelection": "Hacer zoom a la selección",
+    "preventBinding": "Evitar yuxtaposición de flechas"
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   },
   "encrypted": {
     "tooltip": "Tus dibujos están cifrados de punto a punto, por lo que los servidores de Excalidraw nunca los verán."
@@ -234,9 +255,12 @@
     "title": "Estadísticas para nerds",
     "total": "Total",
     "width": "Ancho"
+<<<<<<< HEAD
   },
   "toast": {
     "copyStyles": "Estilos copiados.",
     "copyToClipboardAsPng": "Copiado al portapapeles como PNG."
+=======
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   }
 }

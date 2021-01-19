@@ -1,4 +1,8 @@
 const path = require("path");
+<<<<<<< HEAD
+=======
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
 const TerserPlugin = require("terser-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
@@ -6,7 +10,12 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
 module.exports = {
   mode: "production",
   entry: {
+<<<<<<< HEAD
     "excalidraw.min": "./entry.js",
+=======
+    "excalidraw.min": "./index.tsx",
+    "fonts.min": "../../../public/fonts.css",
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   },
   output: {
     path: path.resolve(__dirname, "dist"),
@@ -24,7 +33,15 @@ module.exports = {
       {
         test: /\.(sa|sc|c)ss$/,
         exclude: /node_modules/,
+<<<<<<< HEAD
         use: ["style-loader", { loader: "css-loader" }, "sass-loader"],
+=======
+        use: [
+          MiniCssExtractPlugin.loader,
+          { loader: "css-loader" },
+          "sass-loader",
+        ],
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
       },
       {
         test: /\.(ts|tsx|js|jsx|mjs)$/,
@@ -88,6 +105,10 @@ module.exports = {
     },
   },
   plugins: [
+<<<<<<< HEAD
+=======
+    new MiniCssExtractPlugin({ filename: "[name].css" }),
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
     ...(process.env.ANALYZER === "true" ? [new BundleAnalyzerPlugin()] : []),
   ],
   externals: {

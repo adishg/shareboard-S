@@ -199,6 +199,7 @@
   "errorDialog": {
     "title": "Eroare"
   },
+<<<<<<< HEAD
   "helpDialog": {
     "blog": "Citește blogul nostru",
     "click": "clic",
@@ -219,6 +220,26 @@
     "view": "Vizualizare",
     "zoomToFit": "Panoramare pentru a cuprinde totul",
     "zoomToSelection": "Panoramare la selecție"
+=======
+  "shortcutsDialog": {
+    "title": "Comenzi rapide de la tastatură",
+    "shapes": "Forme",
+    "or": "sau",
+    "click": "clic",
+    "drag": "glisare",
+    "curvedArrow": "Săgeată curbată",
+    "curvedLine": "Linie curbată",
+    "editor": "Editor",
+    "view": "Vizualizare",
+    "blog": "Citește blogul nostru",
+    "howto": "Urmărește ghidurile noastre",
+    "github": "Ai întâmpinat o problemă? Trimite un raport",
+    "textNewLine": "Adaugă o linie nouă (text)",
+    "textFinish": "Finalizează editarea (text)",
+    "zoomToFit": "Apropiere/depărtare pentru a cuprinde totul",
+    "zoomToSelection": "Panoramare la selecție",
+    "preventBinding": "Împiedică legarea săgeții"
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   },
   "encrypted": {
     "tooltip": "Desenele tale sunt criptate integral, astfel că serverele Excalidraw nu le vor vedea niciodată."
@@ -234,9 +255,12 @@
     "title": "Statistici pentru pasionați",
     "total": "Total",
     "width": "Lățime"
+<<<<<<< HEAD
   },
   "toast": {
     "copyStyles": "Stiluri copiate.",
     "copyToClipboardAsPng": "Copiat în memoria temporară ca PNG."
+=======
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   }
 }

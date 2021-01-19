@@ -11,6 +11,7 @@ export const GitHubCorner = React.memo(
       viewBox="0 0 250 250"
       className="github-corner rtl-mirror"
     >
+<<<<<<< HEAD
       <a
         href="https://github.com/excalidraw/excalidraw"
         target="_blank"
@@ -33,6 +34,8 @@ export const GitHubCorner = React.memo(
           fill={appearance === "light" ? oc.white : oc.black}
         />
       </a>
+=======
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
     </svg>
   ),
 );

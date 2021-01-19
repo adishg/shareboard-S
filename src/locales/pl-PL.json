@@ -199,6 +199,7 @@
   "errorDialog": {
     "title": "Wystąpił błąd"
   },
+<<<<<<< HEAD
   "helpDialog": {
     "blog": "",
     "click": "",
@@ -219,6 +220,26 @@
     "view": "",
     "zoomToFit": "",
     "zoomToSelection": ""
+=======
+  "shortcutsDialog": {
+    "title": "Skróty klawiszowe",
+    "shapes": "Kształty",
+    "or": "lub",
+    "click": "klik",
+    "drag": "przeciągnij",
+    "curvedArrow": "Zakrzywiona strzałka",
+    "curvedLine": "Zakrzywiona linia",
+    "editor": "Edytor",
+    "view": "Widok",
+    "blog": "Przeczytaj naszego bloga",
+    "howto": "Skorzystaj z instrukcji",
+    "github": "Znalazłeś problem? Zgłoś go",
+    "textNewLine": "Dodaj nową linię (tekst)",
+    "textFinish": "Zakończ edycję (tekst)",
+    "zoomToFit": "Powiększ, aby wyświetlić wszystkie elementy",
+    "zoomToSelection": "Przybliż zaznaczenie",
+    "preventBinding": "Zablokuj przywiązanie strzałek do obiektu"
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   },
   "encrypted": {
     "tooltip": "Twoje rysunki są zabezpieczone szyfrowaniem end-to-end, tak więc nawet w Excalidraw nie jesteśmy w stanie zobaczyć tego co tworzysz."
@@ -234,9 +255,12 @@
     "title": "Statystyki dla nerdów",
     "total": "Łącznie",
     "width": "Szerokość"
+<<<<<<< HEAD
   },
   "toast": {
     "copyStyles": "",
     "copyToClipboardAsPng": ""
+=======
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   }
 }

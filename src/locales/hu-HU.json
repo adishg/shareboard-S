@@ -199,6 +199,7 @@
   "errorDialog": {
     "title": "Hiba"
   },
+<<<<<<< HEAD
   "helpDialog": {
     "blog": "",
     "click": "",
@@ -219,6 +220,26 @@
     "view": "",
     "zoomToFit": "",
     "zoomToSelection": ""
+=======
+  "shortcutsDialog": {
+    "title": "Gyorsbillentyűk",
+    "shapes": "Formák",
+    "or": "vagy",
+    "click": "klikk",
+    "drag": "húzd",
+    "curvedArrow": "Ívelt nyíl",
+    "curvedLine": "Ívelt vonal",
+    "editor": "Szerkesztő",
+    "view": "Nézet",
+    "blog": "Olvasd a blogunkat",
+    "howto": "Kövesd az útmutatóinkat",
+    "github": "Hibát találtál? Küld be",
+    "textNewLine": "Új sor hozzáadása (szöveg)",
+    "textFinish": "Szerkesztés befejezése (szöveg)",
+    "zoomToFit": "Az összes elem látótérbe hozása",
+    "zoomToSelection": "Kijelölésre nagyítás",
+    "preventBinding": "A nyíl ne ragadjon"
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   },
   "encrypted": {
     "tooltip": "A rajzaidat végpontok közötti titkosítással tároljuk, tehát az Excalidraw szervereiről se tud más belenézni."
@@ -234,9 +255,12 @@
     "title": "Statisztikák",
     "total": "Összesen",
     "width": "Szélesség"
+<<<<<<< HEAD
   },
   "toast": {
     "copyStyles": "",
     "copyToClipboardAsPng": ""
+=======
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   }
 }

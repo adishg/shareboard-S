@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 .DS_Store
 .env.development.local
 .env.local
@@ -20,3 +21,7 @@ static
 yarn-debug.log*
 yarn-error.log*
 yarn.lock
+=======
+.vscode
+node_modules
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5

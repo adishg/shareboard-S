@@ -1249,7 +1249,11 @@ class App extends React.Component<ExcalidrawProps, AppState> {
 
     if (event.key === KEYS.QUESTION_MARK) {
       this.setState({
+<<<<<<< HEAD
         showHelpDialog: true,
+=======
+        showShortcutsDialog: true,
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
       });
     }
 

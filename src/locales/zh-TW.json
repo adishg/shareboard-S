@@ -199,6 +199,7 @@
   "errorDialog": {
     "title": "錯誤"
   },
+<<<<<<< HEAD
   "helpDialog": {
     "blog": "閱讀部落格",
     "click": "點擊",
@@ -219,6 +220,26 @@
     "view": "檢視",
     "zoomToFit": "放大至填滿畫面",
     "zoomToSelection": "縮放至選取區"
+=======
+  "shortcutsDialog": {
+    "title": "鍵盤快速鍵",
+    "shapes": "形狀",
+    "or": "或",
+    "click": "點擊",
+    "drag": "拖曳",
+    "curvedArrow": "箭頭曲線",
+    "curvedLine": "曲線",
+    "editor": "編輯器",
+    "view": "檢視",
+    "blog": "閱讀部落格",
+    "howto": "官方指南",
+    "github": "發現問題？回報 issue",
+    "textNewLine": "換行（文字）",
+    "textFinish": "完成編輯（文字）",
+    "zoomToFit": "放大至填滿畫面",
+    "zoomToSelection": "縮放至選取區",
+    "preventBinding": "防止箭頭綁定"
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   },
   "encrypted": {
     "tooltip": "你的作品已使用 end-to-end 方式加密，Excalidraw 的伺服器也無法取得其內容。"
@@ -234,9 +255,12 @@
     "title": "詳細統計",
     "total": "合計",
     "width": "寬度"
+<<<<<<< HEAD
   },
   "toast": {
     "copyStyles": "已複製樣式",
     "copyToClipboardAsPng": "已複製 PNG 至剪貼簿"
+=======
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   }
 }

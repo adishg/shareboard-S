@@ -163,7 +163,11 @@
     "text": "Suggerimento: puoi anche aggiungere del testo facendo doppio clic ovunque con lo strumento di selezione",
     "linearElementMulti": "Clicca sull'ultimo punto o premi Esc o Invio per finire",
     "lockAngle": "Puoi limitare l'angolo tenendo premuto SHIFT",
+<<<<<<< HEAD
     "resize": "Per vincolare le proporzioni, tieni premuto MAIUSC durante il ridimensionamento;\nper ridimensionare dal centro, tieni premuto ALT",
+=======
+    "resize": "Per vincolare le proporzioni, tenir premuto MAIUSC durante il ridimensionamento;\nper ridimensionare dal centro, tenir premuto ALT",
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
     "rotate": "Puoi mantenere gli angoli tenendo premuto SHIFT durante la rotazione",
     "lineEditor_info": "Fai doppio click o premi invio per modificare i punti",
     "lineEditor_pointSelected": "Premere Elimina per rimuovere il punto, CtrlOrCmd+D per duplicare o trascinare per spostare",
@@ -199,6 +203,7 @@
   "errorDialog": {
     "title": "Errore"
   },
+<<<<<<< HEAD
   "helpDialog": {
     "blog": "",
     "click": "",
@@ -219,6 +224,26 @@
     "view": "",
     "zoomToFit": "",
     "zoomToSelection": ""
+=======
+  "shortcutsDialog": {
+    "title": "Scorciatoie da tastiera",
+    "shapes": "Forme",
+    "or": "oppure",
+    "click": "click",
+    "drag": "trascina",
+    "curvedArrow": "Freccia curva",
+    "curvedLine": "Linea curva",
+    "editor": "Editor",
+    "view": "Vista",
+    "blog": "Leggi il nostro blog",
+    "howto": "Segui le nostre guide",
+    "github": "Hai trovato un problema? Segnalalo",
+    "textNewLine": "Aggiungi nuova riga (testo)",
+    "textFinish": "Completa la modifica (testo)",
+    "zoomToFit": "Adatta zoom per mostrare tutti gli elementi",
+    "zoomToSelection": "Zoom alla selezione",
+    "preventBinding": "Prevenire l'associazione freccia"
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   },
   "encrypted": {
     "tooltip": "I tuoi disegni sono crittografati end-to-end in modo che i server di Excalidraw non li possano mai vedere."
@@ -234,9 +259,12 @@
     "title": "Statistiche per nerd",
     "total": "Totale",
     "width": "Larghezza"
+<<<<<<< HEAD
   },
   "toast": {
     "copyStyles": "Stili copiati.",
     "copyToClipboardAsPng": "Copiato negli appunti come PNG."
+=======
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   }
 }

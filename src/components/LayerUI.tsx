@@ -36,7 +36,11 @@ import { LockIcon } from "./LockIcon";
 import { MobileMenu } from "./MobileMenu";
 import { PasteChartDialog } from "./PasteChartDialog";
 import { Section } from "./Section";
+<<<<<<< HEAD
 import { HelpDialog } from "./HelpDialog";
+=======
+import { ShortcutsDialog } from "./ShortcutsDialog";
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
 import Stack from "./Stack";
 import { ToolButton } from "./ToolButton";
 import { Tooltip } from "./Tooltip";
@@ -566,8 +570,15 @@ const LayerUI = ({
           onClose={() => setAppState({ errorMessage: null })}
         />
       )}
+<<<<<<< HEAD
       {appState.showHelpDialog && (
         <HelpDialog onClose={() => setAppState({ showHelpDialog: false })} />
+=======
+      {appState.showShortcutsDialog && (
+        <ShortcutsDialog
+          onClose={() => setAppState({ showShortcutsDialog: false })}
+        />
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
       )}
       {appState.pasteDialog.shown && (
         <PasteChartDialog

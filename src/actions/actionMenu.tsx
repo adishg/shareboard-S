@@ -74,13 +74,21 @@ export const actionShortcuts = register({
     return {
       appState: {
         ...appState,
+<<<<<<< HEAD
         showHelpDialog: true,
+=======
+        showShortcutsDialog: true,
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
       },
       commitToHistory: false,
     };
   },
   PanelComponent: ({ updateData }) => (
+<<<<<<< HEAD
     <HelpIcon title={t("helpDialog.title")} onClick={updateData} />
+=======
+    <HelpIcon title={t("shortcutsDialog.title")} onClick={updateData} />
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   ),
   keyTest: (event) => event.key === KEYS.QUESTION_MARK,
 });

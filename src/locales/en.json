@@ -199,6 +199,7 @@
   "errorDialog": {
     "title": "Error"
   },
+<<<<<<< HEAD
   "helpDialog": {
     "blog": "Read our blog",
     "click": "click",
@@ -219,6 +220,26 @@
     "view": "View",
     "zoomToFit": "Zoom to fit all elements",
     "zoomToSelection": "Zoom to selection"
+=======
+  "shortcutsDialog": {
+    "title": "Keyboard shortcuts",
+    "shapes": "Shapes",
+    "or": "or",
+    "click": "click",
+    "drag": "drag",
+    "curvedArrow": "Curved arrow",
+    "curvedLine": "Curved line",
+    "editor": "Editor",
+    "view": "View",
+    "blog": "Read our blog",
+    "howto": "Follow our guides",
+    "github": "Found an issue? Submit",
+    "textNewLine": "Add new line (text)",
+    "textFinish": "Finish editing (text)",
+    "zoomToFit": "Zoom to fit all elements",
+    "zoomToSelection": "Zoom to selection",
+    "preventBinding": "Prevent arrow binding"
+>>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   },
   "encrypted": {
     "tooltip": "Your drawings are end-to-end encrypted so Excalidraw's servers will never see them."
