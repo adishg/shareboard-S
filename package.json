@@ -76,7 +76,7 @@
     ],
     "resetMocks": false
   },
-  "name": "excalidraw",
+  "name": "Sharewhiteboard",
   "private": true,
   "scripts": {
     "build-node": "node ./scripts/build-node.js",

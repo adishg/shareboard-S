@@ -1,6 +1,6 @@
 import { FontFamily } from "./element/types";
 
-export const APP_NAME = "Excalidraw";
+export const APP_NAME = "ShareWhiteboard";
 
 export const DRAGGING_THRESHOLD = 10; // 10px
 export const LINE_CONFIRM_THRESHOLD = 10; // 10px
