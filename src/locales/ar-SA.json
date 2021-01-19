@@ -199,7 +199,6 @@
   "errorDialog": {
     "title": "خطأ"
   },
-<<<<<<< HEAD
   "helpDialog": {
     "blog": "",
     "click": "",
@@ -220,26 +219,6 @@
     "view": "",
     "zoomToFit": "",
     "zoomToSelection": ""
-=======
-  "shortcutsDialog": {
-    "title": "اختصارات لوحة المفاتيح",
-    "shapes": "الأشكال",
-    "or": "أو",
-    "click": "انقر",
-    "drag": "اسحب",
-    "curvedArrow": "سهم منحنى",
-    "curvedLine": "خط منحنى",
-    "editor": "المحرر",
-    "view": "المشهد",
-    "blog": "اقرأ مدونتنا",
-    "howto": "اتبع دليلنا",
-    "github": "عثرت على مشكلة؟ إرسال",
-    "textNewLine": "إضافة سطر جديد (نص)",
-    "textFinish": "الانتهاء من تحرير (النص)",
-    "zoomToFit": "تكبير لتلائم جميع العناصر",
-    "zoomToSelection": "تقريب للمحدد",
-    "preventBinding": "منع ربط السهم"
->>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   },
   "encrypted": {
     "tooltip": "رسوماتك مشفرة من النهاية إلى النهاية حتى أن خوادم Excalidraw لن تراها أبدا."
@@ -255,12 +234,9 @@
     "title": "إحصائيات للمهووسين",
     "total": "المجموع",
     "width": "العرض"
-<<<<<<< HEAD
   },
   "toast": {
     "copyStyles": "",
     "copyToClipboardAsPng": ""
-=======
->>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   }
 }

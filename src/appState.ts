@@ -63,11 +63,7 @@ export const getDefaultAppState = (): Omit<
     selectionElement: null,
     shouldAddWatermark: false,
     shouldCacheIgnoreZoom: false,
-<<<<<<< HEAD
     showHelpDialog: false,
-=======
-    showShortcutsDialog: false,
->>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
     showStats: false,
     startBoundElement: null,
     suggestedBindings: [],
@@ -146,11 +142,7 @@ const APP_STATE_STORAGE_CONF = (<
   selectionElement: { browser: false, export: false },
   shouldAddWatermark: { browser: true, export: false },
   shouldCacheIgnoreZoom: { browser: true, export: false },
-<<<<<<< HEAD
   showHelpDialog: { browser: false, export: false },
-=======
-  showShortcutsDialog: { browser: false, export: false },
->>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   showStats: { browser: true, export: false },
   startBoundElement: { browser: false, export: false },
   suggestedBindings: { browser: false, export: false },

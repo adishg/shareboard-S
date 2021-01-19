@@ -80,11 +80,7 @@ export const Dialog = (props: {
       onCloseRequest={props.onCloseRequest}
     >
       <Island ref={setIslandNode}>
-<<<<<<< HEAD
         <h2 id="dialog-title" className="Dialog__title">
-=======
-        <h3 id="dialog-title" className="Dialog__title">
->>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
           <span className="Dialog__titleContent">{props.title}</span>
           <button
             className="Modal__close"
@@ -93,11 +89,7 @@ export const Dialog = (props: {
           >
             {useIsMobile() ? back : close}
           </button>
-<<<<<<< HEAD
         </h2>
-=======
-        </h3>
->>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
         <div className="Dialog__content">{props.children}</div>
       </Island>
     </Modal>

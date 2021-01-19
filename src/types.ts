@@ -81,11 +81,7 @@ export type AppState = {
   selectedElementIds: { [id: string]: boolean };
   previousSelectedElementIds: { [id: string]: boolean };
   shouldCacheIgnoreZoom: boolean;
-<<<<<<< HEAD
   showHelpDialog: boolean;
-=======
-  showShortcutsDialog: boolean;
->>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   toastMessage: string | null;
   zenModeEnabled: boolean;
   appearance: "light" | "dark";

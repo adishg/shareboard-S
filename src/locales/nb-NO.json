@@ -199,7 +199,6 @@
   "errorDialog": {
     "title": "Feil"
   },
-<<<<<<< HEAD
   "helpDialog": {
     "blog": "Les bloggen vår",
     "click": "klikk",
@@ -220,26 +219,6 @@
     "view": "Vis",
     "zoomToFit": "Zoom for å se alle elementer",
     "zoomToSelection": "Zoom til utvalg"
-=======
-  "shortcutsDialog": {
-    "title": "Tastatursnarveier",
-    "shapes": "Figurer",
-    "or": "eller",
-    "click": "klikk",
-    "drag": "dra",
-    "curvedArrow": "Buet pil",
-    "curvedLine": "Buet linje",
-    "editor": "Redigering",
-    "view": "Visning",
-    "blog": "Les bloggen vår",
-    "howto": "Følg våre veiledninger",
-    "github": "Funnet et problem? Send inn",
-    "textNewLine": "Legg til ny linje (tekst)",
-    "textFinish": "Fullfør redigering (tekst)",
-    "zoomToFit": "Zoom for å passe alle elementene",
-    "zoomToSelection": "Zoom til utvalg",
-    "preventBinding": "Forhindre pilbinding"
->>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   },
   "encrypted": {
     "tooltip": "Dine tegninger er ende-til-ende-krypterte slik at Excalidraw sine servere aldri vil se dem."
@@ -255,12 +234,9 @@
     "title": "Statistikk for nerder",
     "total": "Totalt",
     "width": "Bredde"
-<<<<<<< HEAD
   },
   "toast": {
     "copyStyles": "Kopierte stiler.",
     "copyToClipboardAsPng": "Kopiert til utklippstavlen som PNG."
-=======
->>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   }
 }

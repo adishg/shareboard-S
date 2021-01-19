@@ -199,7 +199,6 @@
   "errorDialog": {
     "title": "Fout"
   },
-<<<<<<< HEAD
   "helpDialog": {
     "blog": "Lees onze blog",
     "click": "klik",
@@ -220,26 +219,6 @@
     "view": "Weergave",
     "zoomToFit": "Zoom in op alle elementen",
     "zoomToSelection": "Inzoomen op selectie"
-=======
-  "shortcutsDialog": {
-    "title": "Sneltoetsen",
-    "shapes": "Vormen",
-    "or": "of",
-    "click": "klik",
-    "drag": "slepen",
-    "curvedArrow": "Gebogen pijl",
-    "curvedLine": "Gebogen lijn",
-    "editor": "Editor",
-    "view": "Weergave",
-    "blog": "Lees onze blog",
-    "howto": "Volg onze handleidingen",
-    "github": "Probleem gevonden? Stuur een nieuwe issue",
-    "textNewLine": "Nieuwe regel toevoegen (tekst)",
-    "textFinish": "Voltooi bewerken (tekst)",
-    "zoomToFit": "Zoom in op alle elementen",
-    "zoomToSelection": "Inzoomen op selectie",
-    "preventBinding": "Pijlbinding voorkomen"
->>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   },
   "encrypted": {
     "tooltip": "Je tekeningen zijn beveiligd met end-to-end encryptie, dus Excalidraw's servers zullen nooit zien wat je tekent."
@@ -255,12 +234,9 @@
     "title": "Statistieken voor nerds",
     "total": "Totaal",
     "width": "Breedte"
-<<<<<<< HEAD
   },
   "toast": {
     "copyStyles": "Stijlen gekopieerd.",
     "copyToClipboardAsPng": "Gekopieerd naar klembord als PNG."
-=======
->>>>>>> 0afb0687a07404181f555f0c1cda5f9082505cb5
   }
 }
