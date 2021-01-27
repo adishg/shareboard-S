@@ -370,6 +370,7 @@ class App extends React.Component<ExcalidrawProps, AppState> {
           onExportToBackend={onExportToBackend}
           renderCustomFooter={renderFooter}
         />
+        <button className="logoutlink" onClick={this.logoutclick}>Logout</button>
         {this.state.showStats && (
           <Stats
             appState={this.state}
@@ -412,7 +413,10 @@ class App extends React.Component<ExcalidrawProps, AppState> {
   public getSceneElementsIncludingDeleted = () => {
     return this.scene.getElementsIncludingDeleted();
   };
-
+  logoutclick = () => {
+    localStorage.clear();
+    window.location.href = "http://localhost/whiteboard"
+  };
   public getSceneElements = () => {
     return this.scene.getElements();
   };
@@ -1230,8 +1234,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
           }
           return prop === "key"
             ? // CapsLock inverts capitalization based on ShiftKey, so invert
-              // it back
-              event.shiftKey
+            // it back
+            event.shiftKey
               ? ev.key.toUpperCase()
               : ev.key.toLowerCase()
             : value;
@@ -1616,30 +1620,30 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     const element = existingTextElement
       ? existingTextElement
       : newTextElement({
-          x: parentCenterPosition
-            ? parentCenterPosition.elementCenterX
-            : sceneX,
-          y: parentCenterPosition
-            ? parentCenterPosition.elementCenterY
-            : sceneY,
-          strokeColor: this.state.currentItemStrokeColor,
-          backgroundColor: this.state.currentItemBackgroundColor,
-          fillStyle: this.state.currentItemFillStyle,
-          strokeWidth: this.state.currentItemStrokeWidth,
-          strokeStyle: this.state.currentItemStrokeStyle,
-          roughness: this.state.currentItemRoughness,
-          opacity: this.state.currentItemOpacity,
-          strokeSharpness: this.state.currentItemStrokeSharpness,
-          text: "",
-          fontSize: this.state.currentItemFontSize,
-          fontFamily: this.state.currentItemFontFamily,
-          textAlign: parentCenterPosition
-            ? "center"
-            : this.state.currentItemTextAlign,
-          verticalAlign: parentCenterPosition
-            ? "middle"
-            : DEFAULT_VERTICAL_ALIGN,
-        });
+        x: parentCenterPosition
+          ? parentCenterPosition.elementCenterX
+          : sceneX,
+        y: parentCenterPosition
+          ? parentCenterPosition.elementCenterY
+          : sceneY,
+        strokeColor: this.state.currentItemStrokeColor,
+        backgroundColor: this.state.currentItemBackgroundColor,
+        fillStyle: this.state.currentItemFillStyle,
+        strokeWidth: this.state.currentItemStrokeWidth,
+        strokeStyle: this.state.currentItemStrokeStyle,
+        roughness: this.state.currentItemRoughness,
+        opacity: this.state.currentItemOpacity,
+        strokeSharpness: this.state.currentItemStrokeSharpness,
+        text: "",
+        fontSize: this.state.currentItemFontSize,
+        fontFamily: this.state.currentItemFontFamily,
+        textAlign: parentCenterPosition
+          ? "center"
+          : this.state.currentItemTextAlign,
+        verticalAlign: parentCenterPosition
+          ? "middle"
+          : DEFAULT_VERTICAL_ALIGN,
+      });
 
     this.setState({ editingElement: element });
 
@@ -3308,8 +3312,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
         (isBindingEnabled(this.state)
           ? bindOrUnbindSelectedElements
           : unbindLinearElements)(
-          getSelectedElements(this.scene.getElements(), this.state),
-        );
+            getSelectedElements(this.scene.getElements(), this.state),
+          );
       }
 
       if (!elementLocked && elementType !== "draw") {
@@ -3369,11 +3373,11 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     this.setState({
       suggestedBindings:
         hoveredBindableElement != null &&
-        !isLinearElementSimpleAndAlreadyBound(
-          linearElement,
-          oppositeBindingBoundElement?.id,
-          hoveredBindableElement,
-        )
+          !isLinearElementSimpleAndAlreadyBound(
+            linearElement,
+            oppositeBindingBoundElement?.id,
+            hoveredBindableElement,
+          )
           ? [hoveredBindableElement]
           : [],
     });
@@ -3394,8 +3398,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
       // element from it
       editingGroupId:
         prevState.editingGroupId &&
-        hitElement != null &&
-        isElementInGroup(hitElement, prevState.editingGroupId)
+          hitElement != null &&
+          isElementInGroup(hitElement, prevState.editingGroupId)
           ? prevState.editingGroupId
           : null,
     }));
@@ -3627,17 +3631,17 @@ class App extends React.Component<ExcalidrawProps, AppState> {
             action: () => this.pasteFromClipboard(null),
           },
           probablySupportsClipboardBlob &&
-            elements.length > 0 && {
-              shortcutName: "copyAsPng",
-              label: t("labels.copyAsPng"),
-              action: this.copyToClipboardAsPng,
-            },
+          elements.length > 0 && {
+            shortcutName: "copyAsPng",
+            label: t("labels.copyAsPng"),
+            action: this.copyToClipboardAsPng,
+          },
           probablySupportsClipboardWriteText &&
-            elements.length > 0 && {
-              shortcutName: "copyAsSvg",
-              label: t("labels.copyAsSvg"),
-              action: this.copyToClipboardAsSvg,
-            },
+          elements.length > 0 && {
+            shortcutName: "copyAsSvg",
+            label: t("labels.copyAsSvg"),
+            action: this.copyToClipboardAsSvg,
+          },
           ...this.actionManager.getContextMenuItems((action) =>
             CANVAS_ONLY_ACTIONS.includes(action.name),
           ),

@@ -27,3 +27,11 @@
   color: var(--popup-text-color);
   font-size: 1.3em;
 }
+.logoutlink,
+.logoutlink:hover {
+  position: absolute;
+  right: 150px;
+  top: 18px;
+  color: #000 !important;
+  text-decoration: none;
+}
