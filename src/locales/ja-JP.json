@@ -41,7 +41,7 @@
     "withBackground": "",
     "exportEmbedScene": "エクスポートされたファイルにシーンを埋め込みます",
     "exportEmbedScene_details": "シーンデータはエクスポートされたPNG/SVGファイルに保存され、シーンを復元することができます。\nエクスポートされたファイルのサイズは増加します。",
-    "addWatermark": "\"Made with Excalidraw\"と表示",
+    "addWatermark": "\"Made with Sharewhiteboard\"と表示",
     "handDrawn": "手描き風",
     "normal": "普通",
     "code": "コード",
