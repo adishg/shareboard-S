@@ -1,7 +1,7 @@
 import React from "react";
 import { getDefaultAppState } from "../appState";
 import { ColorPicker } from "../components/ColorPicker";
-import { resetZoom, trash, zoomIn, zoomOut } from "../components/icons";
+import { resetZoom, trash, zoomIn, zoomOut, chat } from "../components/icons";
 import { ToolButton } from "../components/ToolButton";
 import { getCommonBounds, getNonDeletedElements } from "../element";
 import { newElementWith } from "../element/mutateElement";
@@ -15,6 +15,7 @@ import { getNewZoom } from "../scene/zoom";
 import { AppState, NormalizedZoomValue } from "../types";
 import { getShortcutKey } from "../utils";
 import { register } from "./register";
+import { AiFillWechat, AiOutlineWechat } from "react-icons/ai"
 
 export const actionChangeViewBackgroundColor = register({
   name: "changeViewBackgroundColor",
@@ -249,6 +250,27 @@ export const actionZoomToSelected = register({
     !event.altKey &&
     !event[KEYS.CTRL_OR_CMD],
 });
+export const actionStartChat = register({
+  name: 'Startchat',
+  perform: (_, appState, value) => {
+    return {
+      appState: { ...appState, viewBackgroundColor: value },
+      commitToHistory: true,
+    };
+  },
+  PanelComponent: ({ updateData }) => (
+    <ToolButton
+      type="button"
+      icon={chat}
+      title={t("buttons.startChat")}
+      aria-label={t("buttons.startChat")}
+      onClick={() => {
+        updateData(null);
+      }}
+    />
+  ),
+
+})
 
 export const actionZoomToFit = register({
   name: "zoomToFit",

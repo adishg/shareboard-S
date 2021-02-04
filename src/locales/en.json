@@ -122,7 +122,10 @@
     "darkMode": "Dark mode",
     "lightMode": "Light mode",
     "zenMode": "Zen mode",
-    "exitZenMode": "Exit zen mode"
+    "exitZenMode": "Exit zen mode",
+    "startChat": "Start chat with users",
+    "logout": "Stop Session",
+    "mute": "Mute your audio"
   },
   "alerts": {
     "clearReset": "This will clear the whole canvas. Are you sure?",

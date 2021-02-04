@@ -370,7 +370,6 @@ class App extends React.Component<ExcalidrawProps, AppState> {
           onExportToBackend={onExportToBackend}
           renderCustomFooter={renderFooter}
         />
-        <button className="logoutlink" onClick={this.logoutclick}>Logout</button>
         {this.state.showStats && (
           <Stats
             appState={this.state}
@@ -413,10 +412,7 @@ class App extends React.Component<ExcalidrawProps, AppState> {
   public getSceneElementsIncludingDeleted = () => {
     return this.scene.getElementsIncludingDeleted();
   };
-  logoutclick = () => {
-    localStorage.clear();
-    window.location.href = "http://localhost/whiteboard"
-  };
+
   public getSceneElements = () => {
     return this.scene.getElements();
   };
