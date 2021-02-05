@@ -1,3 +1,7 @@
+/*
+ *   Copyright (c) 2021 
+ *   All rights reserved.
+ */
 import React from "react";
 import { ExcalidrawElement } from "../element/types";
 import { AppState } from "../types";
@@ -5,11 +9,11 @@ import { AppState } from "../types";
 /** if false, the action should be prevented */
 export type ActionResult =
   | {
-      elements?: readonly ExcalidrawElement[] | null;
-      appState?: MarkOptional<AppState, "offsetTop" | "offsetLeft"> | null;
-      commitToHistory: boolean;
-      syncHistory?: boolean;
-    }
+    elements?: readonly ExcalidrawElement[] | null;
+    appState?: MarkOptional<AppState, "offsetTop" | "offsetLeft"> | null;
+    commitToHistory: boolean;
+    syncHistory?: boolean;
+  }
   | false;
 
 type ActionFn = (
@@ -75,7 +79,8 @@ export type ActionName =
   | "alignVerticallyCentered"
   | "alignHorizontallyCentered"
   | "distributeHorizontally"
-  | "distributeVertically";
+  | "distributeVertically"
+  | "Startchat";
 
 export interface Action {
   name: ActionName;
