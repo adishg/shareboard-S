@@ -1,8 +1,10 @@
+import { useNavigation } from "react-navi";
 import React, { useState, useRef } from "react";
 import { onLogin } from "./auth.api";
 import { AuthForm } from "./Auth.component";
 
 const LoginPage = () => {
+  const  navigation  = useNavigation();
   const [{ username, password }, setCredentials] = useState({
     username: '',
     password: ''
@@ -24,6 +26,8 @@ const LoginPage = () => {
     if(response && response.error){
       setError(response.error);
       return false;
+    }else{
+      navigation.navigate("/");
     }
   }
 
