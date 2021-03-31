@@ -5,5 +5,5 @@ interface Context {
 }
 
 export function withAuthentication(matcher: Matcher<{}, Context>){
-    return map((_, context: Context) => context.token ? matcher: redirect('/locin')) ;
+    return map((_, context: Context) => context.token ? matcher: redirect('/login')) ;
 }

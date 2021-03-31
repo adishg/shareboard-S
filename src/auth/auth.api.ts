@@ -5,6 +5,13 @@ export interface Credentials {
     password: string
 }
 
+interface LoginApiResponse {
+    created: string,
+    id: string,
+    token: string,
+    username: string
+}
+
 export const onLogin = async (data: Credentials) => {
     const requestConfig: AxiosRequestConfig = {
         method: 'post',
@@ -12,10 +19,20 @@ export const onLogin = async (data: Credentials) => {
         data  
     }
     try{
-        const {data: response} = await Axios.request(requestConfig);
-        console.log(response);
+        const {data: {token}} = await Axios.request(requestConfig);
+        //store token
+        storeToken(token);
+        return {
+            token
+        }
     }catch(e){
         console.error(e);
         return {error: e.response.data.message}
     }
+}
+
+export const BOUNCE_IT_TOKEN_KEY = 'bounce_it_token_key'
+
+const storeToken = (token: string) => {
+    localStorage.setItem(BOUNCE_IT_TOKEN_KEY, token);
 }

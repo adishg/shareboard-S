@@ -11,22 +11,23 @@ const LoginPage = () => {
   });
 
   const [error, setError] = useState('');
-  const login = (event: React.FormEvent) => {
+  const login = async (event: React.FormEvent) => {
     event.preventDefault();
     if(username == '' || password == ''){
       setError('Username and Password are required');
       return false;
     }
 
-    const response = await onLogin({
+    const {error, token}= await onLogin({
       username, 
       password
-    })
+    });
 
-    if(response && response.error){
-      setError(response.error);
+    if(error){
+      setError(error);
       return false;
     }else{
+      navigation.setContext(token);//refresh token
       navigation.navigate("/");
     }
   }
