@@ -9,12 +9,13 @@ import "./excalidraw-app/pwa";
 import "./excalidraw-app/sentry";
 import LoginPage from "./auth/LoginPage";
 import RegisterPage from "./auth/RegisterPage";
+import { withAuthentication } from "./auth/authenticationRoute";
 
 const routes = mount({
-    "/": route({
+    "/": withAuthentication(route({
         title:"Shareboard",
         view: <ExcalidrawApp />
-    }),
+    })),
     "/login": route({
         title:"Login | Shareboard",
         view: <LoginPage/>
