@@ -13,13 +13,13 @@
     ],
     "no-else-return": "warn",
     "no-lonely-if": "warn",
-    "no-restricted-syntax": [
-      "warn",
-      {
-        "message": "Use 't(...)' instead of literal text in JSX",
-        "selector": "JSXText[value=/\\w/]"
-      }
-    ],
+    // "no-restricted-syntax": [
+    //   "warn",
+    //   {
+    //     "message": "Use 't(...)' instead of literal text in JSX",
+    //     "selector": "JSXText[value=/\\w/]"
+    //   }
+    // ],
     "no-unneeded-ternary": "warn",
     "no-unused-expressions": "warn",
     "no-unused-vars": "warn",

@@ -2,7 +2,9 @@
 <html lang="en">
   <head>
     <meta charset="utf-8" />
-    <title>Sharewhiteboard | Hand-drawn look & feel • Collaborative • Secure</title>
+    <title>
+      Sharewhiteboard | Hand-drawn look & feel • Collaborative • Secure
+    </title>
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover, shrink-to-fit=no"
@@ -52,7 +54,10 @@
       content="Sharewhiteboard is a whiteboard tool that lets you easily sketch diagrams that have a hand-drawn feel to them."
     />
     <!-- OG tags require absolute url for images -->
-    <meta name="twitter:image" content="https://Sharewhiteboard.com/og-image.png" />
+    <meta
+      name="twitter:image"
+      content="https://Sharewhiteboard.com/og-image.png"
+    />
     <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 
     <!-- Sharewhiteboard version -->
@@ -121,7 +126,8 @@
         width: 1px;
         overflow: hidden;
         clip: rect(1px, 1px, 1px, 1px);
-        white-space: nowrap; /* added line */
+        white-space: nowrap;
+        /* added line */
       }
 
       .LoadingMessage {
@@ -144,7 +150,23 @@
         color: var(--popup-text-color);
         font-size: 1.3em;
       }
+
+      #root {
+        display: flex;
+        min-height: 100vh;
+        flex-direction: column;
+      }
+
+      main {
+        flex: 1 0 auto;
+      }
     </style>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+      integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+      crossorigin="anonymous"
+    />
   </head>
 
   <body>
