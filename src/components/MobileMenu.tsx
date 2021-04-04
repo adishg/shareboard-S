@@ -14,7 +14,7 @@ import { Section } from "./Section";
 import CollabButton from "./CollabButton";
 import { SCROLLBAR_WIDTH, SCROLLBAR_MARGIN } from "../scene/scrollbars";
 import { LockIcon } from "./LockIcon";
-import { UserList } from "./UserList";
+import { SignOut } from "./SignOut";
 import { BackgroundPickerAndDarkModeToggle } from "./BackgroundPickerAndDarkModeToggle";
 
 type MobileMenuProps = {
@@ -105,7 +105,7 @@ export const MobileMenu = ({
                 {renderCustomFooter?.(true)}
                 <fieldset>
                   <legend>{t("labels.collaborators")}</legend>
-                  <UserList mobile>
+                  <SignOut mobile>
                     {Array.from(appState.collaborators)
                       // Collaborator is either not initialized or is actually the current user.
                       .filter(([_, client]) => Object.keys(client).length !== 0)
@@ -117,7 +117,7 @@ export const MobileMenu = ({
                           )}
                         </React.Fragment>
                       ))}
-                  </UserList>
+                  </SignOut>
                 </fieldset>
               </Stack.Col>
             </div>

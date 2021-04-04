@@ -27,7 +27,7 @@ import { ExportCB, ExportDialog } from "./ExportDialog";
 import { FixedSideContainer } from "./FixedSideContainer";
 import { GitHubCorner } from "./GitHubCorner";
 import { HintViewer } from "./HintViewer";
-import { exportFile, load, logout, mute, shield } from "./icons";
+import { exportFile, load, mute, shield } from "./icons";
 import { Island } from "./Island";
 import "./LayerUI.scss";
 import { LibraryUnit } from "./LibraryUnit";
@@ -40,7 +40,7 @@ import { HelpDialog } from "./HelpDialog";
 import Stack from "./Stack";
 import { ToolButton } from "./ToolButton";
 import { Tooltip } from "./Tooltip";
-import { UserList } from "./UserList";
+import { SignOut } from "./SignOut";
 
 interface LayerUIProps {
   actionManager: ActionManager;
@@ -272,15 +272,15 @@ const LibraryMenu = ({
           {t("labels.libraryLoadingMessage")}
         </div>
       ) : (
-          <LibraryMenuItems
-            library={libraryItems}
-            onRemoveFromLibrary={removeFromLibrary}
-            onAddToLibrary={addToLibrary}
-            onInsertShape={onInsertShape}
-            pendingElements={pendingElements}
-            setAppState={setAppState}
-          />
-        )}
+        <LibraryMenuItems
+          library={libraryItems}
+          onRemoveFromLibrary={removeFromLibrary}
+          onAddToLibrary={addToLibrary}
+          onInsertShape={onInsertShape}
+          pendingElements={pendingElements}
+          setAppState={setAppState}
+        />
+      )}
     </Island>
   );
 };
@@ -349,9 +349,9 @@ const LayerUI = ({
         onExportToBackend={
           onExportToBackend
             ? (elements) => {
-              onExportToBackend &&
-                onExportToBackend(elements, appState, canvas);
-            }
+                onExportToBackend &&
+                  onExportToBackend(elements, appState, canvas);
+              }
             : undefined
         }
       />
@@ -482,13 +482,12 @@ const LayerUI = ({
                     onChange={onLockToggle}
                     title={t("toolBar.lock")}
                   />
-
                 </Stack.Row>
                 {libraryMenu}
               </Stack.Col>
             )}
           </Section>
-          <UserList
+          <SignOut
             className={clsx("zen-mode-transition", {
               "transition-right": zenModeEnabled,
             })}
@@ -504,7 +503,7 @@ const LayerUI = ({
                   {actionManager.renderAction("goToCollaborator", clientId)}
                 </Tooltip>
               ))}
-          </UserList>
+          </SignOut>
         </div>
       </FixedSideContainer>
     );
@@ -610,25 +609,25 @@ const LayerUI = ({
       />
     </>
   ) : (
-      <div className="layer-ui__wrapper">
-        {dialogs}
-        {renderFixedSideContainer()}
-        {renderBottomAppMenu()}
-        {
-          <aside
-            className={clsx(
-              "layer-ui__wrapper__github-corner zen-mode-transition",
-              {
-                "transition-right": zenModeEnabled,
-              },
-            )}
-          >
-            <GitHubCorner appearance={appState.appearance} />
-          </aside>
-        }
-        {renderFooter()}
-      </div>
-    );
+    <div className="layer-ui__wrapper">
+      {dialogs}
+      {renderFixedSideContainer()}
+      {renderBottomAppMenu()}
+      {
+        <aside
+          className={clsx(
+            "layer-ui__wrapper__github-corner zen-mode-transition",
+            {
+              "transition-right": zenModeEnabled,
+            },
+          )}
+        >
+          <GitHubCorner appearance={appState.appearance} />
+        </aside>
+      }
+      {renderFooter()}
+    </div>
+  );
 };
 
 const areEqual = (prev: LayerUIProps, next: LayerUIProps) => {

@@ -44,3 +44,8 @@ export const register = async (payload: IRegister) => {
     localStorage.removeItem(CONSTANT.TOKEN);
   }
 };
+
+export const signOut = () => {
+  localStorage.removeItem(CONSTANT.TOKEN);
+  return true;
+};
