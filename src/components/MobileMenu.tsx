@@ -1,4 +1,4 @@
-import React from "react";
+import React, { BaseSyntheticEvent } from "react";
 import { AppState } from "../types";
 import { ActionManager } from "../actions/manager";
 import { t } from "../i18n";
@@ -28,6 +28,7 @@ type MobileMenuProps = {
   onLockToggle: () => void;
   canvas: HTMLCanvasElement | null;
   isCollaborating: boolean;
+  onDocUploadClick: (e:BaseSyntheticEvent) => void;
   renderCustomFooter?: (isMobile: boolean) => JSX.Element;
 };
 

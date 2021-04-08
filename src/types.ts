@@ -83,6 +83,7 @@ export type AppState = {
   shouldCacheIgnoreZoom: boolean;
   showHelpDialog: boolean;
   toastMessage: string | null;
+  uploadedFiles:any[];
   zenModeEnabled: boolean;
   appearance: "light" | "dark";
   gridSize: number | null;
@@ -191,5 +192,5 @@ export type SceneData = {
   elements?: ImportedDataState["elements"];
   appState?: ImportedDataState["appState"];
   collaborators?: Map<string, Collaborator>;
-  commitToHistory?: boolean;
+  commitToHistory?: boolean
 };

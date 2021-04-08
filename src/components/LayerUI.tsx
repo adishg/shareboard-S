@@ -1,5 +1,6 @@
 import clsx from "clsx";
 import React, {
+  BaseSyntheticEvent,
   RefObject,
   useCallback,
   useEffect,
@@ -35,6 +36,7 @@ import { LoadingMessage } from "./LoadingMessage";
 import { LockIcon } from "./LockIcon";
 import { MobileMenu } from "./MobileMenu";
 import { PasteChartDialog } from "./PasteChartDialog";
+import {UploadIcon} from "./UploadIcon";
 import { Section } from "./Section";
 import { HelpDialog } from "./HelpDialog";
 import Stack from "./Stack";
@@ -51,6 +53,7 @@ interface LayerUIProps {
   onCollabButtonClick?: () => void;
   onLockToggle: () => void;
   onInsertElements: (elements: readonly NonDeletedExcalidrawElement[]) => void;
+  onDocUploadClick:(e:BaseSyntheticEvent)=> void;
   zenModeEnabled: boolean;
   toggleZenMode: () => void;
   langCode: Language["code"];
@@ -293,6 +296,7 @@ const LayerUI = ({
   elements,
   onCollabButtonClick,
   onLockToggle,
+  onDocUploadClick,
   onInsertElements,
   zenModeEnabled,
   toggleZenMode,
@@ -482,6 +486,12 @@ const LayerUI = ({
                     onChange={onLockToggle}
                     title={t("toolBar.lock")}
                   />
+                   <UploadIcon 
+                  zenModeEnabled={zenModeEnabled}
+                  title="Upload"
+                  onClick={onDocUploadClick}
+                
+                  />
 
                 </Stack.Row>
                 {libraryMenu}
@@ -605,6 +615,7 @@ const LayerUI = ({
         onCollabButtonClick={onCollabButtonClick}
         onLockToggle={onLockToggle}
         canvas={canvas}
+        onDocUploadClick={onDocUploadClick}
         isCollaborating={isCollaborating}
         renderCustomFooter={renderCustomFooter}
       />

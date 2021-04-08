@@ -1,5 +1,5 @@
 import { Point, simplify } from "points-on-curve";
-import React from "react";
+import React, { BaseSyntheticEvent } from "react";
 import { RoughCanvas } from "roughjs/bin/canvas";
 import rough from "roughjs/bin/rough";
 import "../actions";
@@ -10,6 +10,7 @@ import { actions } from "../actions/register";
 import { ActionResult } from "../actions/types";
 import { trackEvent } from "../analytics";
 import { getDefaultAppState } from "../appState";
+import { APIService } from "../services/api/api-service";
 import {
   copyToClipboard,
   parseClipboard,
@@ -105,6 +106,7 @@ import {
   isSelectedViaGroup,
   selectGroupsForSelectedElements,
 } from "../groups";
+import axios from "axios";
 import { createHistory, SceneHistory } from "../history";
 import { defaultLang, getLanguage, languages, setLanguage, t } from "../i18n";
 import {
@@ -159,6 +161,7 @@ import ContextMenu from "./ContextMenu";
 import LayerUI from "./LayerUI";
 import { Stats } from "./Stats";
 import { Toast } from "./Toast";
+import { URLS } from "../constants/urls";
 
 const { history } = createHistory();
 
@@ -367,6 +370,7 @@ class App extends React.Component<ExcalidrawProps, AppState> {
           toggleZenMode={this.toggleZenMode}
           langCode={getLanguage().code}
           isCollaborating={this.props.isCollaborating || false}
+          onDocUploadClick={this.onDocUploadClick}
           onExportToBackend={onExportToBackend}
           renderCustomFooter={renderFooter}
         />
@@ -393,14 +397,14 @@ class App extends React.Component<ExcalidrawProps, AppState> {
             width={canvasWidth}
             height={canvasHeight}
             ref={this.handleCanvasRef}
-            onContextMenu={this.handleCanvasContextMenu}
-            onPointerDown={this.handleCanvasPointerDown}
+            onContextMenu={this.handleCanvasContextMenu} //fires on right click
+            onPointerDown={this.handleCanvasPointerDown} 
             onDoubleClick={this.handleCanvasDoubleClick}
             onPointerMove={this.handleCanvasPointerMove}
             onPointerUp={this.removePointer}
-            onPointerCancel={this.removePointer}
-            onTouchMove={this.handleTouchMove}
-            onDrop={this.handleCanvasOnDrop}
+            onPointerCancel={this.removePointer} // event is fired when the browser determines that there are unlikely to be any more pointer events, or if after the pointerdown event is fired, the pointer is then used to manipulate the viewport by panning, zooming, or scrolling.
+            onTouchMove={this.handleTouchMove} //Execute a JavaScript when the user moves the finger over a P element (for touch screens only):
+            onDrop={this.handleCanvasOnDrop} //Execute a JavaScript when a draggable element is dropped in a <div> element:
           >
             {t("labels.drawingCanvas")}
           </canvas>
@@ -649,6 +653,10 @@ class App extends React.Component<ExcalidrawProps, AppState> {
         this.initializeScene();
       });
     }
+
+   
+   
+
   }
 
   public componentWillUnmount() {
@@ -657,6 +665,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     this.scene.destroy();
     clearTimeout(touchTimeout);
     touchTimeout = 0;
+
+  
   }
 
   private onResize = withBatchedUpdates(() => {
@@ -740,6 +750,11 @@ class App extends React.Component<ExcalidrawProps, AppState> {
   }
 
   componentDidUpdate(prevProps: ExcalidrawProps, prevState: AppState) {
+
+    
+    
+
+
     if (prevProps.langCode !== this.props.langCode) {
       this.updateLanguage();
     }
@@ -877,7 +892,13 @@ class App extends React.Component<ExcalidrawProps, AppState> {
         this.state,
       );
     }
+
+    
+    
   }
+
+
+
 
   // Copy/paste
 
@@ -1156,6 +1177,68 @@ class App extends React.Component<ExcalidrawProps, AppState> {
       gridSize: this.state.gridSize ? null : GRID_SIZE,
     });
   };
+
+  private onDocUploadClick = async (e: BaseSyntheticEvent) => {
+
+    // ----------Save file in state-------------------
+    var x = 400 + (this.state.uploadedFiles.length * 10);
+    var y = 200 + (this.state.uploadedFiles.length * 10);
+    this.state.uploadedFiles.push({ file: e.target.files[0], x, y })
+
+    
+
+    //-------------Save file in data base/ backened-----
+    const roomID = window.location.hash.substr(1);
+    if (roomID !== '')  {
+      const formData = new FormData();
+      formData.append(
+        "document",
+        e.target.files[0],
+        e.target.files[0].name
+      );
+      formData.append('roomId', roomID)
+      var config = {
+        headers: {
+          // 'authorization': localStorage.getItem("token")?.toString(),
+          'authorization': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZjMWExZGZiODZlZjE5ZGE5NDE5ZTEiLCJ1c2VyX25hbWUiOiJhZGlzaC45Lmd1cHRhIiwicGFzc3dvcmQiOiJkZWY5NzAxNDI2OTQwZWFiMzk4YjJmNmZiM2IzZGE0ZCIsImZpcnN0bmFtZSI6ImFkaXNoIiwibGFzdG5hbWUiOiJndXB0YSIsImVtYWlsIjoiYWRpc2guOS5ndXB0YUBnbWFpbC5jb20iLCJfX3YiOjAsImlhdCI6MTYxNzcxMzQ5MCwiZXhwIjoxNjQ5MjQ5NDkwfQ.s_gT6xPKWceGOcQOCMF7-b29COX0YKxS0i9kGFpMLiY",
+
+        }
+
+
+      };
+
+
+      axios.post(URLS.BASEURL+"/room/pinDocument", formData, config).then(
+        (res) => {
+          console.log(res)
+          this.state.uploadedFiles.forEach((file,index)=>{
+            if(res.data.data.documentName === e.target.files[0].name)  {
+            this.state.uploadedFiles[index] = {
+                ...file,
+                path : res.data.data.filePath
+              }
+             
+            }
+          })
+       
+
+        }
+      )
+
+    //----------------- Show file in canvas -----------
+
+      this.addTextFromPaste(e.target.files[0].name)
+
+    }
+    else {
+      alert("Please start collabration to pin Document")
+    }
+
+
+  }
+
+  
+
 
   toggleStats = () => {
     if (!this.state.showStats) {
@@ -1603,6 +1686,13 @@ class App extends React.Component<ExcalidrawProps, AppState> {
   }) => {
     const existingTextElement = this.getTextElementAtPosition(sceneX, sceneY);
 
+    console.log(this.scene)
+    this.state.uploadedFiles.forEach((file)=>{
+      if(file.file.name === existingTextElement?.text){
+        window.open(file.path);
+        return;
+      }
+    })
     const parentCenterPosition =
       insertAtParentCenter &&
       this.getTextWysiwygSnappedToCenterPosition(

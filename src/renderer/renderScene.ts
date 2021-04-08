@@ -222,8 +222,10 @@ export const renderScene = (
     context.fillStyle = sceneState.viewBackgroundColor;
     context.fillRect(0, 0, normalizedCanvasWidth, normalizedCanvasHeight);
     context.fillStyle = fillStyle;
+    
   } else {
     context.clearRect(0, 0, normalizedCanvasWidth, normalizedCanvasHeight);
+    
   }
 
   // Apply zoom
