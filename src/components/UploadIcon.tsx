@@ -31,7 +31,7 @@ export const UploadIcon = (props: UploadIconProps) => {
   return (
     <label
       className={clsx(
-        "ToolIcon ToolIcon__lock ToolIcon_type_floating zen-mode-visibility",
+        "ToolIcon Shape zen-mode-visibility",
         `ToolIcon_size_${props.size || DEFAULT_SIZE}`,
         {
           "zen-mode-visibility--hidden": props.zenModeEnabled,

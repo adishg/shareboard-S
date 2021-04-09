@@ -83,7 +83,6 @@ export type AppState = {
   shouldCacheIgnoreZoom: boolean;
   showHelpDialog: boolean;
   toastMessage: string | null;
-  uploadedFiles:any[];
   zenModeEnabled: boolean;
   appearance: "light" | "dark";
   gridSize: number | null;

@@ -1181,61 +1181,49 @@ class App extends React.Component<ExcalidrawProps, AppState> {
 
   private onDocUploadClick = async (e: BaseSyntheticEvent) => {
 
-    // ----------Save file in state-------------------
-    var x = 400 + (this.state.uploadedFiles.length * 10);
-    var y = 200 + (this.state.uploadedFiles.length * 10);
-    this.state.uploadedFiles.push({ file: e.target.files[0], x, y })
-
-    this.syncActionResult({
-      appState: {
-        ...(this.state)
-      },
-      commitToHistory: true,
-    });
-
-  
+    const file = e.target.files[0];
 
     //-------------Save file in data base/ backened-----
+    this.saveFileInBackend(file)
+
+
+  }
+
+  private saveFileInBackend(file:any){
     const roomID = window.location.hash.substr(1);
     if (roomID !== '') {
 
-        //-------------Show file in canvas-----------------
-    this.pinDocToScene(e.target.files[0].name)
+      //-------------Show file in canvas-----------------
+      this.pinDocToScene(file.name)
 
-    //----------------------------------------------------
+      //----------------------------------------------------
 
       const formData = new FormData();
       formData.append(
         "document",
-        e.target.files[0],
-        e.target.files[0].name
+        file,
+        file.name
       );
       formData.append('roomId', roomID)
       var config = {
         headers: {
           // 'authorization': localStorage.getItem("token")?.toString(),
           'authorization': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MDZjMWExZGZiODZlZjE5ZGE5NDE5ZTEiLCJ1c2VyX25hbWUiOiJhZGlzaC45Lmd1cHRhIiwicGFzc3dvcmQiOiJkZWY5NzAxNDI2OTQwZWFiMzk4YjJmNmZiM2IzZGE0ZCIsImZpcnN0bmFtZSI6ImFkaXNoIiwibGFzdG5hbWUiOiJndXB0YSIsImVtYWlsIjoiYWRpc2guOS5ndXB0YUBnbWFpbC5jb20iLCJfX3YiOjAsImlhdCI6MTYxNzcxMzQ5MCwiZXhwIjoxNjQ5MjQ5NDkwfQ.s_gT6xPKWceGOcQOCMF7-b29COX0YKxS0i9kGFpMLiY",
-
         }
-
-
       };
 
 
       axios.post(URLS.BASEURL + "/room/pinDocument", formData, config).then(
         (res) => {
-         
           this.scene.getElements().forEach(
-            element => { if (element.type === "text" && element.text === e.target.files[0].name) 
-            { element.file = res.data.data.filePath;
-              } })
-
-
+            element => {
+              if (element.type === "text" && element.text === file.name) {
+                element.file = res.data.data.filePath;
+              }
+            })
         }
       )
 
-
-      
     }
     else {
       alert("Please start collabration to pin Document")
@@ -1246,11 +1234,11 @@ class App extends React.Component<ExcalidrawProps, AppState> {
 
   private pinDocToScene(text: any) {
     var [minX, minY, maxX, maxY] = getCommonBounds(this.scene.getElements());
-    if(minX=== 0 && minY === 0 && maxX === 0 && maxY === 0){
-      minX=0;
-      minY=0;
-      maxX=this.state.width;
-      maxY=this.state.height;
+    if (minX === 0 && minY === 0 && maxX === 0 && maxY === 0) {
+      minX = 0;
+      minY = 0;
+      maxX = this.state.width;
+      maxY = this.state.height;
     }
 
     const x = distance(minX, maxX) / 2;
@@ -3574,6 +3562,10 @@ class App extends React.Component<ExcalidrawProps, AppState> {
           },
           commitToHistory: true,
         });
+        return;
+      }
+      else {
+        this.saveFileInBackend(file);
         return;
       }
     } catch (error) {
