@@ -474,6 +474,12 @@ const LayerUI = ({
                       />
                     </Stack.Row>
                   </Island>
+                  <UploadIcon 
+                  zenModeEnabled={zenModeEnabled}
+                  title="Upload"
+                  onClick={onDocUploadClick}
+                
+                  />
                   <ToolButton
                     type="button"
                     icon={mute}
@@ -486,12 +492,7 @@ const LayerUI = ({
                     onChange={onLockToggle}
                     title={t("toolBar.lock")}
                   />
-                   <UploadIcon 
-                  zenModeEnabled={zenModeEnabled}
-                  title="Upload"
-                  onClick={onDocUploadClick}
-                
-                  />
+                   
 
                 </Stack.Row>
                 {libraryMenu}

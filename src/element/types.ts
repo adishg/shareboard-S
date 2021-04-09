@@ -87,15 +87,16 @@ export type NonDeleted<TElement extends ExcalidrawElement> = TElement & {
 export type NonDeletedExcalidrawElement = NonDeleted<ExcalidrawElement>;
 
 export type ExcalidrawTextElement = _ExcalidrawElementBase &
-  Readonly<{
+  {
     type: "text";
+    file:string;
     fontSize: number;
     fontFamily: FontFamily;
     text: string;
     baseline: number;
     textAlign: TextAlign;
     verticalAlign: VerticalAlign;
-  }>;
+  };
 
 export type ExcalidrawBindableElement =
   | ExcalidrawRectangleElement

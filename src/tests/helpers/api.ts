@@ -119,6 +119,7 @@ export class API {
         element = newTextElement({
           ...base,
           text: rest.text || "test",
+          file: rest.text || "test",
           fontSize: rest.fontSize ?? appState.currentItemFontSize,
           fontFamily: rest.fontFamily ?? appState.currentItemFontFamily,
           textAlign: rest.textAlign ?? appState.currentItemTextAlign,

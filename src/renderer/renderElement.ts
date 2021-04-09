@@ -167,7 +167,6 @@ const drawElementOnCanvas = (
             (index + 1) * lineHeight - verticalOffset,
           );
         }
-        context.fillText("Hello",horizontalOffset,200)
         context.fillStyle = fillStyle;
         context.font = font;
         context.textAlign = textAlign;

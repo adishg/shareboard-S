@@ -398,7 +398,7 @@ class App extends React.Component<ExcalidrawProps, AppState> {
             height={canvasHeight}
             ref={this.handleCanvasRef}
             onContextMenu={this.handleCanvasContextMenu} //fires on right click
-            onPointerDown={this.handleCanvasPointerDown} 
+            onPointerDown={this.handleCanvasPointerDown}
             onDoubleClick={this.handleCanvasDoubleClick}
             onPointerMove={this.handleCanvasPointerMove}
             onPointerUp={this.removePointer}
@@ -654,8 +654,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
       });
     }
 
-   
-   
+
+
 
   }
 
@@ -666,7 +666,7 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     clearTimeout(touchTimeout);
     touchTimeout = 0;
 
-  
+
   }
 
   private onResize = withBatchedUpdates(() => {
@@ -751,8 +751,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
 
   componentDidUpdate(prevProps: ExcalidrawProps, prevState: AppState) {
 
-    
-    
+
+
 
 
     if (prevProps.langCode !== this.props.langCode) {
@@ -893,8 +893,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
       );
     }
 
-    
-    
+
+
   }
 
 
@@ -1113,6 +1113,7 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     );
 
     const element = newTextElement({
+      file: "",
       x,
       y,
       strokeColor: this.state.currentItemStrokeColor,
@@ -1185,11 +1186,24 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     var y = 200 + (this.state.uploadedFiles.length * 10);
     this.state.uploadedFiles.push({ file: e.target.files[0], x, y })
 
-    
+    this.syncActionResult({
+      appState: {
+        ...(this.state)
+      },
+      commitToHistory: true,
+    });
+
+  
 
     //-------------Save file in data base/ backened-----
     const roomID = window.location.hash.substr(1);
-    if (roomID !== '')  {
+    if (roomID !== '') {
+
+        //-------------Show file in canvas-----------------
+    this.pinDocToScene(e.target.files[0].name)
+
+    //----------------------------------------------------
+
       const formData = new FormData();
       formData.append(
         "document",
@@ -1208,36 +1222,68 @@ class App extends React.Component<ExcalidrawProps, AppState> {
       };
 
 
-      axios.post(URLS.BASEURL+"/room/pinDocument", formData, config).then(
+      axios.post(URLS.BASEURL + "/room/pinDocument", formData, config).then(
         (res) => {
-          console.log(res)
-          this.state.uploadedFiles.forEach((file,index)=>{
-            if(res.data.data.documentName === e.target.files[0].name)  {
-            this.state.uploadedFiles[index] = {
-                ...file,
-                path : res.data.data.filePath
-              }
-             
-            }
-          })
-       
+         
+          this.scene.getElements().forEach(
+            element => { if (element.type === "text" && element.text === e.target.files[0].name) 
+            { element.file = res.data.data.filePath;
+              } })
+
 
         }
       )
 
-    //----------------- Show file in canvas -----------
 
-      this.addTextFromPaste(e.target.files[0].name)
-
+      
     }
     else {
       alert("Please start collabration to pin Document")
     }
 
-
   }
 
-  
+
+  private pinDocToScene(text: any) {
+    var [minX, minY, maxX, maxY] = getCommonBounds(this.scene.getElements());
+    if(minX=== 0 && minY === 0 && maxX === 0 && maxY === 0){
+      minX=0;
+      minY=0;
+      maxX=this.state.width;
+      maxY=this.state.height;
+    }
+
+    const x = distance(minX, maxX) / 2;
+    const y = distance(minY, maxY) / 2;
+
+    const element = newTextElement({
+      file: "",
+      x,
+      y,
+      strokeColor: this.state.currentItemStrokeColor,
+      backgroundColor: this.state.currentItemBackgroundColor,
+      fillStyle: this.state.currentItemFillStyle,
+      strokeWidth: this.state.currentItemStrokeWidth,
+      strokeStyle: this.state.currentItemStrokeStyle,
+      roughness: this.state.currentItemRoughness,
+      opacity: this.state.currentItemOpacity,
+      strokeSharpness: this.state.currentItemStrokeSharpness,
+      text,
+      fontSize: this.state.currentItemFontSize,
+      fontFamily: this.state.currentItemFontFamily,
+      textAlign: this.state.currentItemTextAlign,
+      verticalAlign: DEFAULT_VERTICAL_ALIGN,
+    });
+
+    this.scene.replaceAllElements([
+      ...this.scene.getElementsIncludingDeleted(),
+      element,
+    ]);
+    this.setState({ selectedElementIds: { [element.id]: true } });
+    history.resumeRecording();
+  }
+
+
 
 
   toggleStats = () => {
@@ -1686,13 +1732,12 @@ class App extends React.Component<ExcalidrawProps, AppState> {
   }) => {
     const existingTextElement = this.getTextElementAtPosition(sceneX, sceneY);
 
-    console.log(this.scene)
-    this.state.uploadedFiles.forEach((file)=>{
-      if(file.file.name === existingTextElement?.text){
-        window.open(file.path);
-        return;
-      }
-    })
+
+    if (existingTextElement?.file !== "" && existingTextElement?.file !== undefined) {
+      window.open(existingTextElement?.file);
+      return;
+    }
+
     const parentCenterPosition =
       insertAtParentCenter &&
       this.getTextWysiwygSnappedToCenterPosition(
@@ -1720,6 +1765,7 @@ class App extends React.Component<ExcalidrawProps, AppState> {
         roughness: this.state.currentItemRoughness,
         opacity: this.state.currentItemOpacity,
         strokeSharpness: this.state.currentItemStrokeSharpness,
+        file: "",
         text: "",
         fontSize: this.state.currentItemFontSize,
         fontFamily: this.state.currentItemFontFamily,

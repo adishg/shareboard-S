@@ -20,8 +20,8 @@ const DEFAULT_SIZE: UploadIconSize = "m";
 const ICONS = {
   DEFAULT: (
 
-    <svg height="30" width="200">
-      <text x="0" y="15" fill="black">+</text>
+    <svg style={{marginLeft: "10px"}} height="30" width="200">
+      <text x="0" y="15" fill="black" > +</text>
     </svg>
 
   )

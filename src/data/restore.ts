@@ -80,6 +80,7 @@ const restoreElement = (
         fontFamily = getFontFamilyByName(_fontFamily);
       }
       return restoreElementWithProperties(element, {
+        file:element.file,
         fontSize,
         fontFamily,
         text: element.text ?? "",
