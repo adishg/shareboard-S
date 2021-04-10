@@ -12,6 +12,8 @@ import {
 } from "../../packages/excalidraw/index";
 import { ExcalidrawElement } from "../../element/types";
 import { BROADCAST, SCENE } from "../app_constants";
+import { ChatService } from "../../services/socket-services/chat.service";
+import { getUserDetails } from "../../services/auth-service";
 
 class Portal {
   app: CollabWrapper;
@@ -46,6 +48,19 @@ class Portal {
     this.socket.on("room-user-change", (clients: string[]) => {
       this.app.setCollaborators(clients);
     });
+
+    const chatService = ChatService.chatService;
+    chatService.initChatRoom();
+    const userDetails = getUserDetails();
+    chatService.joinGroup(
+      {
+        group: id,
+        from: userDetails.name,
+        userType: "1",
+        username: userDetails.username,
+      },
+      () => {},
+    );
   }
 
   close() {
