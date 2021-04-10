@@ -1,0 +1,50 @@
+/*
+ *   Copyright (c) 2021 
+ *   All rights reserved.
+ */
+$bluecolor: #7952b3;
+.mainwrapper {
+  padding: 30px 20px;
+}
+.mainwrapper .row {
+  margin: 0;
+}
+.customcard {
+  border: 1px solid #ccc;
+  margin: 5px;
+  height: 7rem;
+  width: 12rem;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  border-radius: 20px;
+  cursor: pointer;
+  background: #f2f2f2;
+}
+.bluefill {
+  color: #fff !important;
+  background-color: $bluecolor;
+}
+.noborder {
+  border: 0;
+}
+.alignend {
+  align-items: flex-end;
+  .fa {
+    padding: 0 5px;
+  }
+}
+.greybg {
+  background: #bdafaf;
+  width: 100%;
+  text-align: center;
+  padding: 5px 0;
+  color: #fff;
+  font-size: 12px;
+}
+.largecard {
+  height: 13rem;
+  .greybg {
+    padding: 10px 0;
+  }
+}
