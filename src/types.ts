@@ -191,5 +191,5 @@ export type SceneData = {
   elements?: ImportedDataState["elements"];
   appState?: ImportedDataState["appState"];
   collaborators?: Map<string, Collaborator>;
-  commitToHistory?: boolean;
+  commitToHistory?: boolean
 };

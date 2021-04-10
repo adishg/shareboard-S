@@ -1,5 +1,5 @@
 import { Point, simplify } from "points-on-curve";
-import React from "react";
+import React, { BaseSyntheticEvent } from "react";
 import { RoughCanvas } from "roughjs/bin/canvas";
 import rough from "roughjs/bin/rough";
 import "../actions";
@@ -10,6 +10,7 @@ import { actions } from "../actions/register";
 import { ActionResult } from "../actions/types";
 import { trackEvent } from "../analytics";
 import { getDefaultAppState } from "../appState";
+import { APIService } from "../services/api/api-service";
 import {
   copyToClipboard,
   parseClipboard,
@@ -105,6 +106,7 @@ import {
   isSelectedViaGroup,
   selectGroupsForSelectedElements,
 } from "../groups";
+import axios from "axios";
 import { createHistory, SceneHistory } from "../history";
 import { defaultLang, getLanguage, languages, setLanguage, t } from "../i18n";
 import {
@@ -159,6 +161,9 @@ import ContextMenu from "./ContextMenu";
 import LayerUI from "./LayerUI";
 import { Stats } from "./Stats";
 import { Toast } from "./Toast";
+import { URLS } from "../constants/urls";
+import { HTTP_RESPONSE } from "../enums/http-responses.enum";
+import { IDocumentResponse } from "../models/document.model";
 
 const { history } = createHistory();
 
@@ -367,6 +372,7 @@ class App extends React.Component<ExcalidrawProps, AppState> {
           toggleZenMode={this.toggleZenMode}
           langCode={getLanguage().code}
           isCollaborating={this.props.isCollaborating || false}
+          onDocUploadClick={this.onDocUploadClick}
           onExportToBackend={onExportToBackend}
           renderCustomFooter={renderFooter}
         />
@@ -393,14 +399,14 @@ class App extends React.Component<ExcalidrawProps, AppState> {
             width={canvasWidth}
             height={canvasHeight}
             ref={this.handleCanvasRef}
-            onContextMenu={this.handleCanvasContextMenu}
+            onContextMenu={this.handleCanvasContextMenu} //fires on right click
             onPointerDown={this.handleCanvasPointerDown}
             onDoubleClick={this.handleCanvasDoubleClick}
             onPointerMove={this.handleCanvasPointerMove}
             onPointerUp={this.removePointer}
-            onPointerCancel={this.removePointer}
-            onTouchMove={this.handleTouchMove}
-            onDrop={this.handleCanvasOnDrop}
+            onPointerCancel={this.removePointer} // event is fired when the browser determines that there are unlikely to be any more pointer events, or if after the pointerdown event is fired, the pointer is then used to manipulate the viewport by panning, zooming, or scrolling.
+            onTouchMove={this.handleTouchMove} //Execute a JavaScript when the user moves the finger over a P element (for touch screens only):
+            onDrop={this.handleCanvasOnDrop} //Execute a JavaScript when a draggable element is dropped in a <div> element:
           >
             {t("labels.drawingCanvas")}
           </canvas>
@@ -649,6 +655,10 @@ class App extends React.Component<ExcalidrawProps, AppState> {
         this.initializeScene();
       });
     }
+
+
+
+
   }
 
   public componentWillUnmount() {
@@ -657,6 +667,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     this.scene.destroy();
     clearTimeout(touchTimeout);
     touchTimeout = 0;
+
+
   }
 
   private onResize = withBatchedUpdates(() => {
@@ -740,6 +752,11 @@ class App extends React.Component<ExcalidrawProps, AppState> {
   }
 
   componentDidUpdate(prevProps: ExcalidrawProps, prevState: AppState) {
+
+
+
+
+
     if (prevProps.langCode !== this.props.langCode) {
       this.updateLanguage();
     }
@@ -877,7 +894,13 @@ class App extends React.Component<ExcalidrawProps, AppState> {
         this.state,
       );
     }
+
+
+
   }
+
+
+
 
   // Copy/paste
 
@@ -1092,6 +1115,7 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     );
 
     const element = newTextElement({
+      file: "",
       x,
       y,
       strokeColor: this.state.currentItemStrokeColor,
@@ -1156,6 +1180,103 @@ class App extends React.Component<ExcalidrawProps, AppState> {
       gridSize: this.state.gridSize ? null : GRID_SIZE,
     });
   };
+
+  private onDocUploadClick = async (e: BaseSyntheticEvent) => {
+
+    const file = e.target.files[0];
+
+    //-------------Save file in data base/ backened-----
+    this.saveFileInBackend(file)
+
+
+  }
+
+  private async saveFileInBackend(file:any){
+    const roomID = window.location.hash.substr(1);
+    if (roomID !== '') {
+
+      //-------------Show file in canvas-----------------
+      this.pinDocToScene(file.name)
+
+      //----------------------------------------------------
+
+      const formData = new FormData();
+      formData.append(
+        "document",
+        file,
+        file.name
+      );
+      formData.append('roomId', roomID)
+      var config = {
+        headers: {
+          'authorization': await APIService.Instance.getToken(),
+        }
+      };
+
+      let response;
+      try {
+        response = await APIService.Instance.post(URLS.PINDOCUMENT, formData, config);
+        if (response.status === HTTP_RESPONSE.SUCCESS) {
+          const data: IDocumentResponse = response.data;
+          this.scene.getElements().forEach(
+            element => {
+              if (element.type === "text" && element.text === file.name) {
+                element.file = data['filePath'];
+              }
+            })
+        }
+      } catch (err) {
+        alert(err.response.data.message);
+      }
+    }
+    else {
+      alert("Please start collabration to pin Document")
+    }
+
+  }
+
+
+  private pinDocToScene(text: any) {
+    var [minX, minY, maxX, maxY] = getCommonBounds(this.scene.getElements());
+    if (minX === 0 && minY === 0 && maxX === 0 && maxY === 0) {
+      minX = 0;
+      minY = 0;
+      maxX = this.state.width;
+      maxY = this.state.height;
+    }
+
+    const x = distance(minX, maxX) / 2;
+    const y = distance(minY, maxY) / 2;
+
+    const element = newTextElement({
+      file: "",
+      x,
+      y,
+      strokeColor: this.state.currentItemStrokeColor,
+      backgroundColor: this.state.currentItemBackgroundColor,
+      fillStyle: this.state.currentItemFillStyle,
+      strokeWidth: this.state.currentItemStrokeWidth,
+      strokeStyle: this.state.currentItemStrokeStyle,
+      roughness: this.state.currentItemRoughness,
+      opacity: this.state.currentItemOpacity,
+      strokeSharpness: this.state.currentItemStrokeSharpness,
+      text,
+      fontSize: this.state.currentItemFontSize,
+      fontFamily: this.state.currentItemFontFamily,
+      textAlign: this.state.currentItemTextAlign,
+      verticalAlign: DEFAULT_VERTICAL_ALIGN,
+    });
+
+    this.scene.replaceAllElements([
+      ...this.scene.getElementsIncludingDeleted(),
+      element,
+    ]);
+    this.setState({ selectedElementIds: { [element.id]: true } });
+    history.resumeRecording();
+  }
+
+
+
 
   toggleStats = () => {
     if (!this.state.showStats) {
@@ -1603,6 +1724,12 @@ class App extends React.Component<ExcalidrawProps, AppState> {
   }) => {
     const existingTextElement = this.getTextElementAtPosition(sceneX, sceneY);
 
+
+    if (existingTextElement?.file !== "" && existingTextElement?.file !== undefined) {
+      window.open(existingTextElement?.file);
+      return;
+    }
+
     const parentCenterPosition =
       insertAtParentCenter &&
       this.getTextWysiwygSnappedToCenterPosition(
@@ -1616,30 +1743,31 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     const element = existingTextElement
       ? existingTextElement
       : newTextElement({
-          x: parentCenterPosition
-            ? parentCenterPosition.elementCenterX
-            : sceneX,
-          y: parentCenterPosition
-            ? parentCenterPosition.elementCenterY
-            : sceneY,
-          strokeColor: this.state.currentItemStrokeColor,
-          backgroundColor: this.state.currentItemBackgroundColor,
-          fillStyle: this.state.currentItemFillStyle,
-          strokeWidth: this.state.currentItemStrokeWidth,
-          strokeStyle: this.state.currentItemStrokeStyle,
-          roughness: this.state.currentItemRoughness,
-          opacity: this.state.currentItemOpacity,
-          strokeSharpness: this.state.currentItemStrokeSharpness,
-          text: "",
-          fontSize: this.state.currentItemFontSize,
-          fontFamily: this.state.currentItemFontFamily,
-          textAlign: parentCenterPosition
-            ? "center"
-            : this.state.currentItemTextAlign,
-          verticalAlign: parentCenterPosition
-            ? "middle"
-            : DEFAULT_VERTICAL_ALIGN,
-        });
+        x: parentCenterPosition
+          ? parentCenterPosition.elementCenterX
+          : sceneX,
+        y: parentCenterPosition
+          ? parentCenterPosition.elementCenterY
+          : sceneY,
+        strokeColor: this.state.currentItemStrokeColor,
+        backgroundColor: this.state.currentItemBackgroundColor,
+        fillStyle: this.state.currentItemFillStyle,
+        strokeWidth: this.state.currentItemStrokeWidth,
+        strokeStyle: this.state.currentItemStrokeStyle,
+        roughness: this.state.currentItemRoughness,
+        opacity: this.state.currentItemOpacity,
+        strokeSharpness: this.state.currentItemStrokeSharpness,
+        file: "",
+        text: "",
+        fontSize: this.state.currentItemFontSize,
+        fontFamily: this.state.currentItemFontFamily,
+        textAlign: parentCenterPosition
+          ? "center"
+          : this.state.currentItemTextAlign,
+        verticalAlign: parentCenterPosition
+          ? "middle"
+          : DEFAULT_VERTICAL_ALIGN,
+      });
 
     this.setState({ editingElement: element });
 
@@ -3438,6 +3566,10 @@ class App extends React.Component<ExcalidrawProps, AppState> {
           },
           commitToHistory: true,
         });
+        return;
+      }
+      else {
+        this.saveFileInBackend(file);
         return;
       }
     } catch (error) {

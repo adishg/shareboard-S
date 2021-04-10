@@ -1,4 +1,4 @@
-import React from "react";
+import React, { BaseSyntheticEvent } from "react";
 import { AppState } from "../types";
 import { ActionManager } from "../actions/manager";
 import { t } from "../i18n";
@@ -16,6 +16,7 @@ import { SCROLLBAR_WIDTH, SCROLLBAR_MARGIN } from "../scene/scrollbars";
 import { LockIcon } from "./LockIcon";
 import { SignOut } from "./SignOut";
 import { BackgroundPickerAndDarkModeToggle } from "./BackgroundPickerAndDarkModeToggle";
+import { UploadIcon } from "./UploadIcon";
 
 type MobileMenuProps = {
   appState: AppState;
@@ -28,6 +29,7 @@ type MobileMenuProps = {
   onLockToggle: () => void;
   canvas: HTMLCanvasElement | null;
   isCollaborating: boolean;
+  onDocUploadClick: (e: BaseSyntheticEvent) => void;
   renderCustomFooter?: (isMobile: boolean) => JSX.Element;
 };
 
@@ -40,6 +42,7 @@ export const MobileMenu = ({
   setAppState,
   onCollabButtonClick,
   onLockToggle,
+  onDocUploadClick,
   canvas,
   isCollaborating,
   renderCustomFooter,
@@ -58,8 +61,15 @@ export const MobileMenu = ({
                     setAppState={setAppState}
                     isLibraryOpen={appState.isLibraryOpen}
                   />
+                  <UploadIcon
+
+                    title="Upload"
+                    onClick={onDocUploadClick}
+
+                  />
                 </Stack.Row>
               </Island>
+
               <LockIcon
                 checked={appState.elementLocked}
                 onChange={onLockToggle}

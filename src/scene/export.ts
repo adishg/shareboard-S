@@ -165,6 +165,7 @@ const getElementsAndWatermark = (
 
 const getWatermarkElement = (maxX: number, maxY: number) => {
   return newTextElement({
+    file: t("labels.madeWithExcalidraw"),
     text: t("labels.madeWithExcalidraw"),
     fontSize: WATERMARK_HEIGHT,
     fontFamily: DEFAULT_FONT_FAMILY,
