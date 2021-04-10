@@ -34,6 +34,9 @@ export const Register: React.FC = () => {
   }, []);
 
   const submitRegister = () => {
+    // eslint-disable-next-line no-console
+    console.log(registerForm);
+    updateFormValue(RegisterFormKeys.USERNAME, registerForm.email);
     const emptyValues = Object.values(registerForm).filter(
       (value) => value.trim() === "",
     );
@@ -98,7 +101,7 @@ export const Register: React.FC = () => {
             />
           </div>
         </div>
-        <div className="form-group">
+        {/* <div className="form-group">
           <label htmlFor="">Username</label>
           <input
             value={registerForm.username}
@@ -108,7 +111,7 @@ export const Register: React.FC = () => {
             className="form-control"
             type="text"
           />
-        </div>
+        </div> */}
         <div className="form-group">
           <label htmlFor="">Email</label>
           <input

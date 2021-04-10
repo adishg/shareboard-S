@@ -41,6 +41,7 @@ import Stack from "./Stack";
 import { ToolButton } from "./ToolButton";
 import { Tooltip } from "./Tooltip";
 import { SignOut } from "./SignOut";
+import { Chat } from "../magnum-components/chat/Chat";
 
 interface LayerUIProps {
   actionManager: ActionManager;
@@ -533,6 +534,13 @@ const LayerUI = ({
 
   const renderFooter = () => (
     <footer role="contentinfo" className="layer-ui__wrapper__footer">
+      <div
+        className={clsx("zen-mode-transition", {
+          "transition-right disable-pointerEvents": zenModeEnabled,
+        })}
+      >
+        {isCollaborating ? <Chat isCollaborating={isCollaborating} /> : null}
+      </div>
       <div
         className={clsx("zen-mode-transition", {
           "transition-right disable-pointerEvents": zenModeEnabled,
