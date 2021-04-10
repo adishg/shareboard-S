@@ -12,6 +12,10 @@ export const login = async (payload: ILogin) => {
     if (response.status === HTTP_RESPONSE.SUCCESS) {
       const data: ILoginResponse = response.data;
       if (data.status) {
+        localStorage.setItem(
+          CONSTANT.USER_DETAILS,
+          JSON.stringify(data.userDetail),
+        );
         localStorage.setItem(CONSTANT.TOKEN, data.token);
       }
     } else {
@@ -47,5 +51,11 @@ export const register = async (payload: IRegister) => {
 
 export const signOut = () => {
   localStorage.removeItem(CONSTANT.TOKEN);
+  localStorage.removeItem(CONSTANT.USER_DETAILS);
   return true;
+};
+
+export const getUserDetails = () => {
+  const userDetails = localStorage.getItem(CONSTANT.USER_DETAILS) || "";
+  return userDetails.length ? JSON.parse(userDetails) : null;
 };
