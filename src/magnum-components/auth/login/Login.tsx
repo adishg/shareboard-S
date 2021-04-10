@@ -37,7 +37,7 @@ export const Login: React.FC = () => {
       </div>
       <div className="main-login-form">
         <div className="form-group">
-          <label htmlFor="">Username</label>
+          <label htmlFor="">Email</label>
           <input
             value={loginForm.username}
             className="form-control"
