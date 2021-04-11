@@ -1,0 +1,48 @@
+/*
+ *   Copyright (c) 2021 
+ *   All rights reserved.
+ */
+$bluecolor: #7952b3;
+.sidenavbar {
+  padding: 30px 20px;
+}
+.contentwrap {
+  font-size: 15px;
+  border-bottom: 1px solid #ccc;
+  padding: 20px 0;
+  .row {
+    margin: 0;
+  }
+  h5 {
+    display: inline;
+    padding: 0 5px;
+    font-size: 16px;
+  }
+  .btn-bd-primary {
+    font-weight: 600;
+    color: $bluecolor !important;
+    border-color: $bluecolor !important;
+  }
+}
+.eachschedule {
+  width: 100%;
+  border: 1px solid #000;
+  border-radius: 5px;
+  margin-top: 10px;
+  padding: 5px;
+  p {
+    margin: 0;
+  }
+  h5 {
+    margin: 0 0 5px 0;
+  }
+  .eachscheduletime {
+    padding: 0 5px;
+  }
+  .smallfont {
+    font-size: 12px;
+  }
+}
+.noborder {
+  border: 0;
+}
