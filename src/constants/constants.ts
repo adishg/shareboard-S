@@ -4,6 +4,13 @@ export const CONSTANT = {
   USER_DETAILS: "userDetails",
 };
 
+export const ROUTES = {
+  LOGIN: "/login",
+  REGISTER: "/register",
+  ROOT: "/",
+  DASHBOARD: "/dashboard",
+};
+
 export const SocketEvents = {
   INIT_ROOM_CHAT: "init-chat-room",
   JOIN_GROUP: "joinGroup",

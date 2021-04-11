@@ -1,9 +1,9 @@
 /*
- *   Copyright (c) 2021 
+ *   Copyright (c) 2021
  *   All rights reserved.
  */
 /*
- *   Copyright (c) 2021 
+ *   Copyright (c) 2021
  *   All rights reserved.
  */
 import React from "react";
@@ -13,11 +13,11 @@ import "./dashboardlayout.scss";
 import { DashboardHeader } from "./Dashboardheader/DashboardHeaderHeader";
 
 export const DashboardLayout: React.FC = () => {
-    return (
-        <div className="w-100">
-            <DashboardHeader></DashboardHeader>
-            <DashboardSidebar></DashboardSidebar>
-            <DashboardMain></DashboardMain>
-        </div>
-    );
+  return (
+    <div className="w-100">
+      <DashboardHeader></DashboardHeader>
+      <DashboardSidebar></DashboardSidebar>
+      <DashboardMain></DashboardMain>
+    </div>
+  );
 };

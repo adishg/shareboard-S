@@ -1,11 +1,10 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /*
  *   Copyright (c) 2021
  *   All rights reserved.
  */
-import { createStyles, makeStyles, TextField, Theme } from "@material-ui/core";
 import React from "react";
 import "./dashboardSidebar.scss";
-import { MuiThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 
 export const DashboardSidebar: React.FC = () => {
   return (
@@ -13,7 +12,6 @@ export const DashboardSidebar: React.FC = () => {
       <div className="sidenavbar" id="sidebar-wrapper">
         <div className="list-group list-group-flush">
           <a href="#" className="sidebarlink active">
-            {" "}
             <i className="fa fa-desktop"></i> All Boards
           </a>
           <a href="#" className="sidebarlink">
@@ -24,7 +22,7 @@ export const DashboardSidebar: React.FC = () => {
               <h5>Projects</h5>
             </div>
             <div className="col-lg-8 col-md-8 col-xs-8 float-left pr-0">
-              <a className=" btn btn-bd-primary">
+              <a href="#" className=" btn btn-bd-primary">
                 <span className="fa fa-plus"> </span>Add
               </a>
             </div>
@@ -34,7 +32,9 @@ export const DashboardSidebar: React.FC = () => {
               <h5>Meetings</h5>
             </div>
             <div className="col-lg-8 col-md-8 col-xs-8 float-left pr-0">
-              <a className=" btn btn-bd-primary">Scheule Now</a>
+              <a href="#" className=" btn btn-bd-primary">
+                Scheule Now
+              </a>
             </div>
           </div>
           <div id="calendar">{/* Calender to be added here */}</div>

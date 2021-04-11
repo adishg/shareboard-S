@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, Redirect } from "react-router-dom";
-import { CONSTANT } from "../../../constants/constants";
+import { CONSTANT, ROUTES } from "../../../constants/constants";
 import { IRegister } from "../../../models/register-payload.model";
 import { APIService } from "../../../services/api/api-service";
 import { register } from "../../../services/auth-service";
@@ -35,8 +35,7 @@ export const Register: React.FC = () => {
 
   const submitRegister = () => {
     // eslint-disable-next-line no-console
-    console.log(registerForm);
-    updateFormValue(RegisterFormKeys.USERNAME, registerForm.email);
+    // console.log(registerForm);
     const emptyValues = Object.values(registerForm).filter(
       (value) => value.trim() === "",
     );
@@ -59,11 +58,14 @@ export const Register: React.FC = () => {
   };
 
   if (redirect === true) {
-    return <Redirect to="/" />;
+    return <Redirect to={ROUTES.DASHBOARD} />;
   }
 
   const updateFormValue = (key: string, value: string) => {
-    const updatedForm = { ...registerForm, [key]: value };
+    let updatedForm = { ...registerForm, [key]: value };
+    if (key === RegisterFormKeys.EMAIL) {
+      updatedForm = { ...updatedForm, username: value };
+    }
     setRegisterForm({ ...updatedForm });
   };
 

@@ -3,6 +3,8 @@
  *   All rights reserved.
  */
 import React from "react";
+import { Link } from "react-router-dom";
+import { ROUTES } from "../../../constants/constants";
 import "./dashboardMain.scss";
 
 export const DashboardMain: React.FC = () => {
@@ -13,9 +15,9 @@ export const DashboardMain: React.FC = () => {
       </div>
       <div className="row">
         <div className="customcard bluefill">
-          <a className="bluefill noborder text-center">
+          <Link to={ROUTES.ROOT} className="bluefill noborder text-center">
             <span className="fa fa-plus d-block"> </span>New Board
-          </a>
+          </Link>
         </div>
         <div className="customcard alignend">
           <div className="greybg">

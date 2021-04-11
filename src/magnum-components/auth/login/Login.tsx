@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useState } from "react";
 import { Link, Redirect } from "react-router-dom";
+import { ROUTES } from "../../../constants/constants";
 import { ILogin } from "../../../models/login-payload.model";
 import { APIService } from "../../../services/api/api-service";
 import { login } from "../../../services/auth-service";
@@ -26,7 +27,7 @@ export const Login: React.FC = () => {
   };
 
   if (redirect === true) {
-    return <Redirect to="/" />;
+    return <Redirect to={ROUTES.DASHBOARD} />;
   }
 
   return (
