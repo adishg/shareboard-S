@@ -36,7 +36,7 @@ import { LoadingMessage } from "./LoadingMessage";
 import { LockIcon } from "./LockIcon";
 import { MobileMenu } from "./MobileMenu";
 import { PasteChartDialog } from "./PasteChartDialog";
-import {UploadIcon} from "./UploadIcon";
+import { UploadIcon } from "./UploadIcon";
 import { Section } from "./Section";
 import { HelpDialog } from "./HelpDialog";
 import Stack from "./Stack";
@@ -53,7 +53,7 @@ interface LayerUIProps {
   onCollabButtonClick?: () => void;
   onLockToggle: () => void;
   onInsertElements: (elements: readonly NonDeletedExcalidrawElement[]) => void;
-  onDocUploadClick:(e:BaseSyntheticEvent)=> void;
+  onDocUploadClick: (e: BaseSyntheticEvent) => void;
   zenModeEnabled: boolean;
   toggleZenMode: () => void;
   langCode: Language["code"];
@@ -274,16 +274,17 @@ const LibraryMenu = ({
         <div className="layer-ui__library-message">
           {t("labels.libraryLoadingMessage")}
         </div>
-      ) : (
-          <LibraryMenuItems
-            library={libraryItems}
-            onRemoveFromLibrary={removeFromLibrary}
-            onAddToLibrary={addToLibrary}
-            onInsertShape={onInsertShape}
-            pendingElements={pendingElements}
-            setAppState={setAppState}
-          />
-        )}
+      ) : 
+      (
+        <LibraryMenuItems
+          library={libraryItems}
+          onRemoveFromLibrary={removeFromLibrary}
+          onAddToLibrary={addToLibrary}
+          onInsertShape={onInsertShape}
+          pendingElements={pendingElements}
+          setAppState={setAppState}
+        />
+      )}
     </Island>
   );
 };
@@ -353,9 +354,9 @@ const LayerUI = ({
         onExportToBackend={
           onExportToBackend
             ? (elements) => {
-              onExportToBackend &&
-                onExportToBackend(elements, appState, canvas);
-            }
+                onExportToBackend &&
+                  onExportToBackend(elements, appState, canvas);
+              }
             : undefined
         }
       />
@@ -474,11 +475,10 @@ const LayerUI = ({
                       />
                     </Stack.Row>
                   </Island>
-                  <UploadIcon 
-                  zenModeEnabled={zenModeEnabled}
-                  title="Upload"
-                  onClick={onDocUploadClick}
-                
+                  <UploadIcon
+                    zenModeEnabled={zenModeEnabled}
+                    title="Upload"
+                    onClick={onDocUploadClick}
                   />
                   <ToolButton
                     type="button"
@@ -492,8 +492,6 @@ const LayerUI = ({
                     onChange={onLockToggle}
                     title={t("toolBar.lock")}
                   />
-                   
-
                 </Stack.Row>
                 {libraryMenu}
               </Stack.Col>
@@ -622,25 +620,25 @@ const LayerUI = ({
       />
     </>
   ) : (
-      <div className="layer-ui__wrapper">
-        {dialogs}
-        {renderFixedSideContainer()}
-        {renderBottomAppMenu()}
-        {
-          <aside
-            className={clsx(
-              "layer-ui__wrapper__github-corner zen-mode-transition",
-              {
-                "transition-right": zenModeEnabled,
-              },
-            )}
-          >
-            <GitHubCorner appearance={appState.appearance} />
-          </aside>
-        }
-        {renderFooter()}
-      </div>
-    );
+    <div className="layer-ui__wrapper">
+      {dialogs}
+      {renderFixedSideContainer()}
+      {renderBottomAppMenu()}
+      {
+        <aside
+          className={clsx(
+            "layer-ui__wrapper__github-corner zen-mode-transition",
+            {
+              "transition-right": zenModeEnabled,
+            },
+          )}
+        >
+          <GitHubCorner appearance={appState.appearance} />
+        </aside>
+      }
+      {renderFooter()}
+    </div>
+  );
 };
 
 const areEqual = (prev: LayerUIProps, next: LayerUIProps) => {

@@ -12,7 +12,7 @@ export type StrokeStyle = "solid" | "dashed" | "dotted";
 export type TextAlign = "left" | "center" | "right";
 export type VerticalAlign = "top" | "middle";
 
-type _ExcalidrawElementBase = Readonly<{
+type _ExcalidrawElementBase = {
   id: string;
   x: number;
   y: number;
@@ -43,7 +43,7 @@ type _ExcalidrawElementBase = Readonly<{
   groupIds: readonly GroupId[];
   /** Ids of (linear) elements that are bound to this element. */
   boundElementIds: readonly ExcalidrawLinearElement["id"][] | null;
-}>;
+};
 
 export type ExcalidrawSelectionElement = _ExcalidrawElementBase & {
   type: "selection";

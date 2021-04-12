@@ -59,6 +59,18 @@ export class Library {
 
   static loadLibrary = (): Promise<LibraryItems> => {
     return new Promise(async (resolve) => {
+      let lib = { library: null };
+      await fetch("Libraries/graphs.txt")
+        .then((response) => response.text())
+        .then((text) => {
+          lib = JSON.parse(text);
+        });
+
+      console.log(lib);
+      if (lib.library && !Library.libraryCache) {
+        Library.libraryCache = lib.library;
+      }
+
       if (Library.libraryCache) {
         return resolve(JSON.parse(JSON.stringify(Library.libraryCache)));
       }
