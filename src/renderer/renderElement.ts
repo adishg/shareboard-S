@@ -27,6 +27,10 @@ import { isPathALoop } from "../math";
 import rough from "roughjs/bin/rough";
 import { Zoom } from "../types";
 import { getDefaultAppState } from "../appState";
+import { ignoreNextOnError } from "@sentry/browser/dist/helpers";
+import { LoadingMessage } from "../components/LoadingMessage";
+import "../enums/fileTypes";
+import { FILE_TYPES, SUPPORTED_FILE_FORMAT } from "../enums/fileTypes";
 
 const defaultAppState = getDefaultAppState();
 
@@ -161,15 +165,39 @@ const drawElementOnCanvas = (
             ? element.width
             : 0;
         for (let index = 0; index < lines.length; index++) {
-          context.fillText(
-            lines[index],
-            horizontalOffset,
-            (index + 1) * lineHeight - verticalOffset,
-          );
+          // IF elelment is of type file then trim its name
+          if (
+            isFileTextElement(element.text) ||
+            (element.file !== "" && element.file !== undefined)
+          ) {
+            if (lines[index].length >= 8) {
+              lines[index] = `${lines[index].slice(0, 8)}...`;
+            }
+            context.fillText(
+              ` ${lines[index]}`,
+              horizontalOffset,
+              (index + 1) * lineHeight - verticalOffset,
+            );
+          } else {
+            context.fillText(
+              lines[index],
+              horizontalOffset,
+              (index + 1) * lineHeight - verticalOffset,
+            );
+          }
         }
+
         context.fillStyle = fillStyle;
         context.font = font;
         context.textAlign = textAlign;
+
+        if (
+          isFileTextElement(element.text) ||
+          (element.file !== "" && element.file !== undefined)
+        ) {
+          DrawFileLogo(context, element, horizontalOffset, verticalOffset);
+        }
+
         if (shouldTemporarilyAttach) {
           context.canvas.remove();
         }
@@ -257,6 +285,57 @@ export const generateRoughOptions = (element: ExcalidrawElement): Options => {
       throw new Error(`Unimplemented type ${element.type}`);
     }
   }
+};
+
+const DrawFileLogo = (
+  context: CanvasRenderingContext2D,
+  element: ExcalidrawTextElement,
+  x: number,
+  y: number,
+) => {
+  const img = new Image();
+
+  let fileUrl = [];
+  let fileType = "";
+  if (element.file === "" || element.file === undefined) {
+    fileUrl = element.text.split(".");
+    fileType = fileUrl[fileUrl.length - 1];
+  } else {
+    fileUrl = element.file.split(".");
+    fileType = fileUrl[fileUrl.length - 1];
+  }
+
+  if (fileType === FILE_TYPES.ADOBEAB) {
+    img.src = "Logos/FileLogos/pdf.svg";
+  } else if (
+    fileType === FILE_TYPES.POWERPOINT ||
+    fileType === FILE_TYPES.POWERPOINT1
+  ) {
+    img.src = "Logos/FileLogos/ppt.png";
+  } else if (fileType === FILE_TYPES.WORD || fileType === FILE_TYPES.WORD1) {
+    img.src = "Logos/FileLogos/Word.png";
+  } else {
+    img.src = "Logos/FileLogos/file.png";
+  }
+
+  img.id = element.text;
+  img.alt = element.file;
+  img.height = 100;
+  img.width = 100;
+  img.onload = () => {
+    context.drawImage(img, x, y, 25, element.height);
+  };
+};
+
+const isFileTextElement = (name: string) => {
+  const fileArray = name.split(".");
+  if (
+    SUPPORTED_FILE_FORMAT.indexOf(fileArray[fileArray.length - 1]) !== -1
+  ) {
+    return true;
+  }
+
+  return false;
 };
 
 const generateElementShape = (

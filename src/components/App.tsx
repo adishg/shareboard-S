@@ -11,6 +11,7 @@ import { ActionResult } from "../actions/types";
 import { trackEvent } from "../analytics";
 import { getDefaultAppState } from "../appState";
 import { APIService } from "../services/api/api-service";
+import "../enums/fileTypes";
 import {
   copyToClipboard,
   parseClipboard,
@@ -162,8 +163,9 @@ import LayerUI from "./LayerUI";
 import { Stats } from "./Stats";
 import { Toast } from "./Toast";
 import { URLS } from "../constants/urls";
-import { HTTP_RESPONSE } from "../enums/http-responses.enum";
 import { IDocumentResponse } from "../models/document.model";
+import { SUPPORTED_FILE_FORMAT } from "../enums/fileTypes";
+import { HTTP_RESPONSE } from "../enums/http-responses.enum";
 
 const { history } = createHistory();
 
@@ -655,10 +657,6 @@ class App extends React.Component<ExcalidrawProps, AppState> {
         this.initializeScene();
       });
     }
-
-
-
-
   }
 
   public componentWillUnmount() {
@@ -667,8 +665,6 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     this.scene.destroy();
     clearTimeout(touchTimeout);
     touchTimeout = 0;
-
-
   }
 
   private onResize = withBatchedUpdates(() => {
@@ -752,11 +748,6 @@ class App extends React.Component<ExcalidrawProps, AppState> {
   }
 
   componentDidUpdate(prevProps: ExcalidrawProps, prevState: AppState) {
-
-
-
-
-
     if (prevProps.langCode !== this.props.langCode) {
       this.updateLanguage();
     }
@@ -894,13 +885,7 @@ class App extends React.Component<ExcalidrawProps, AppState> {
         this.state,
       );
     }
-
-
-
   }
-
-
-
 
   // Copy/paste
 
@@ -1182,16 +1167,17 @@ class App extends React.Component<ExcalidrawProps, AppState> {
   };
 
   private onDocUploadClick = async (e: BaseSyntheticEvent) => {
-
     const file = e.target.files[0];
-
-    //-------------Save file in data base/ backened-----
-    this.saveFileInBackend(file)
-
-
+    this.saveFileInBackend(file);
   }
 
-  private async saveFileInBackend(file:any){
+  private async saveFileInBackend(file: any) {
+    const fileTypeInfo = file.name.split(".")[file.name.split(".").length - 1];
+
+    if (SUPPORTED_FILE_FORMAT.indexOf(fileTypeInfo) === -1) {
+      alert("Invalid file type ! Only Word/PPT/PDF files allowed");
+      return false;
+    }
     const roomID = window.location.hash.substr(1);
     if (roomID !== '') {
 
@@ -1232,21 +1218,24 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     else {
       alert("Please start collabration to pin Document")
     }
-
   }
 
+  private pinDocToScene(text: string) {
+    // var [minX, minY, maxX, maxY] = getCommonBounds(this.scene.getElements());
+    // if (minX === 0 && minY === 0 && maxX === 0 && maxY === 0) {
+    //   minX = 0;
+    //   minY = 0;
+    //   maxX = this.state.width;
+    //   maxY = this.state.height;
+    // }
 
-  private pinDocToScene(text: any) {
-    var [minX, minY, maxX, maxY] = getCommonBounds(this.scene.getElements());
-    if (minX === 0 && minY === 0 && maxX === 0 && maxY === 0) {
-      minX = 0;
-      minY = 0;
-      maxX = this.state.width;
-      maxY = this.state.height;
-    }
+    // const x = distance(minX, maxX) / 2;
+    // const y = distance(minY, maxY) / 2;
 
-    const x = distance(minX, maxX) / 2;
-    const y = distance(minY, maxY) / 2;
+    const { x, y } = viewportCoordsToSceneCoords(
+      { clientX: cursorX, clientY: cursorY },
+      this.state,
+    );
 
     const element = newTextElement({
       file: "",
@@ -1274,9 +1263,6 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     this.setState({ selectedElementIds: { [element.id]: true } });
     history.resumeRecording();
   }
-
-
-
 
   toggleStats = () => {
     if (!this.state.showStats) {
@@ -1351,8 +1337,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
           }
           return prop === "key"
             ? // CapsLock inverts capitalization based on ShiftKey, so invert
-              // it back
-              event.shiftKey
+            // it back
+            event.shiftKey
               ? ev.key.toUpperCase()
               : ev.key.toLowerCase()
             : value;
@@ -1724,8 +1710,10 @@ class App extends React.Component<ExcalidrawProps, AppState> {
   }) => {
     const existingTextElement = this.getTextElementAtPosition(sceneX, sceneY);
 
-
-    if (existingTextElement?.file !== "" && existingTextElement?.file !== undefined) {
+    if (
+      existingTextElement?.file !== "" &&
+      existingTextElement?.file !== undefined
+    ) {
       window.open(existingTextElement?.file);
       return;
     }
@@ -3436,8 +3424,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
         (isBindingEnabled(this.state)
           ? bindOrUnbindSelectedElements
           : unbindLinearElements)(
-          getSelectedElements(this.scene.getElements(), this.state),
-        );
+            getSelectedElements(this.scene.getElements(), this.state),
+          );
       }
 
       if (!elementLocked && elementType !== "draw") {
@@ -3497,11 +3485,11 @@ class App extends React.Component<ExcalidrawProps, AppState> {
     this.setState({
       suggestedBindings:
         hoveredBindableElement != null &&
-        !isLinearElementSimpleAndAlreadyBound(
-          linearElement,
-          oppositeBindingBoundElement?.id,
-          hoveredBindableElement,
-        )
+          !isLinearElementSimpleAndAlreadyBound(
+            linearElement,
+            oppositeBindingBoundElement?.id,
+            hoveredBindableElement,
+          )
           ? [hoveredBindableElement]
           : [],
     });
@@ -3522,8 +3510,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
       // element from it
       editingGroupId:
         prevState.editingGroupId &&
-        hitElement != null &&
-        isElementInGroup(hitElement, prevState.editingGroupId)
+          hitElement != null &&
+          isElementInGroup(hitElement, prevState.editingGroupId)
           ? prevState.editingGroupId
           : null,
     }));
@@ -3569,9 +3557,16 @@ class App extends React.Component<ExcalidrawProps, AppState> {
         return;
       }
       else {
-        this.saveFileInBackend(file);
-        return;
+
+
+        const fileTypeInfo = file.name.split(".")[file.name.split(".").length - 1];
+
+        if (SUPPORTED_FILE_FORMAT.indexOf(fileTypeInfo) !== -1) {
+          this.saveFileInBackend(file);
+          return;
+        }
       }
+
     } catch (error) {
       return this.setState({
         isLoading: false,
@@ -3759,17 +3754,17 @@ class App extends React.Component<ExcalidrawProps, AppState> {
             action: () => this.pasteFromClipboard(null),
           },
           probablySupportsClipboardBlob &&
-            elements.length > 0 && {
-              shortcutName: "copyAsPng",
-              label: t("labels.copyAsPng"),
-              action: this.copyToClipboardAsPng,
-            },
+          elements.length > 0 && {
+            shortcutName: "copyAsPng",
+            label: t("labels.copyAsPng"),
+            action: this.copyToClipboardAsPng,
+          },
           probablySupportsClipboardWriteText &&
-            elements.length > 0 && {
-              shortcutName: "copyAsSvg",
-              label: t("labels.copyAsSvg"),
-              action: this.copyToClipboardAsSvg,
-            },
+          elements.length > 0 && {
+            shortcutName: "copyAsSvg",
+            label: t("labels.copyAsSvg"),
+            action: this.copyToClipboardAsSvg,
+          },
           ...this.actionManager.getContextMenuItems((action) =>
             CANVAS_ONLY_ACTIONS.includes(action.name),
           ),
