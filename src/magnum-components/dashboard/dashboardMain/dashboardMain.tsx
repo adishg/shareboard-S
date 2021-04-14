@@ -34,16 +34,44 @@ export const getDashboardListing = async () => {
   }
 };
 
+export const startMeeting = async () => {
+  try {
+    let config = {
+      headers: {
+        'authorization': await APIService.Instance.getToken(),
+      }
+    };
+    const formData = new FormData();
+    formData.append('eventName','');
+    formData.append('eventDescription','');
+    formData.append('eventDate','');
+
+    const response = await APIService.Instance.post(URLS.ROOM_CREATE, formData,config);
+    console.log(response);
+    let respdata: IRoomModel;
+    if (response.status === HTTP_RESPONSE.SUCCESS) {
+      respdata  = response['data']['roomInfo'];
+      return respdata;
+    }
+    return [];
+  } catch (err) {
+    // TODO add error handling
+    localStorage.removeItem(CONSTANT.TOKEN);
+  }
+};
+
 export const DashboardMain: React.FC = () => {
 
   const [redirect, setRedirect] = useState<boolean>(false);
   const [roomId, setRoomId] = useState('');
   const [roomList, setRoomList] = useState<IRoomModel[]>([]);
 
-  const submitLogin = () => {
-    // login(loginForm).then((res) => {
-    //   setRedirect(true);
-    // });
+  const startMeet = () => {
+      startMeeting().then((data:any) =>{
+        console.log(data);
+        setRoomId(data.meetingId);
+        setRedirect(true);
+      })
   };
 
   const resumeMeetingBoard = (roomInfo: any) => {
@@ -53,7 +81,6 @@ export const DashboardMain: React.FC = () => {
 
   useEffect(() => {
       getDashboardListing().then((data: any)=>{
-        console.log(data);
         setRoomList(data);
       });
   }, []);
@@ -69,7 +96,9 @@ export const DashboardMain: React.FC = () => {
         <h3>Create a board</h3>
       </div>
       <div className="row">
-        <div className="customcard bluefill">
+        <div className="customcard bluefill" onClick={(e)=>{
+          startMeet()
+        }}>
           <Link to={ROUTES.ROOT} className="bluefill noborder text-center">
             <span className="fa fa-plus d-block"> </span>New Board
           </Link>
