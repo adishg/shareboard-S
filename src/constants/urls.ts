@@ -1,5 +1,6 @@
 export const URLS = {
   LOGIN: "/signup/login",
   REGISTER: "/signup/register",
-  PINDOCUMENT: "/room/pinDocument"
+  PINDOCUMENT: "/room/pinDocument",
+  DASHBOARD: "/room/all"
 };
