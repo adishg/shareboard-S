@@ -1169,9 +1169,8 @@ class App extends React.Component<ExcalidrawProps, AppState> {
   };
 
   private onDocUploadClick = async (e: BaseSyntheticEvent) => {
-    console.log(this.scene)
-    // const file = e.target.files[0];
-    // this.saveFileInBackend(file);
+    const file = e.target.files[0];
+    this.saveFileInBackend(file);
   };
 
   private async saveFileInBackend(file: any) {
