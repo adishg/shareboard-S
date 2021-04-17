@@ -146,6 +146,7 @@
     "rectangle": "Prostokąt",
     "diamond": "Romb",
     "ellipse": "Elipsa",
+    "semicircle":"półkole",
     "arrow": "Strzałka",
     "line": "Linia",
     "text": "Tekst",

@@ -91,6 +91,8 @@ const strokeDiamondWithRotation = (
   context.translate(-cx, -cy);
 };
 
+
+
 const strokeEllipseWithRotation = (
   context: CanvasRenderingContext2D,
   width: number,
@@ -101,6 +103,19 @@ const strokeEllipseWithRotation = (
 ) => {
   context.beginPath();
   context.ellipse(cx, cy, width / 2, height / 2, angle, 0, Math.PI * 2);
+  context.stroke();
+};
+
+const strokeSemiCircleWithRotation = (
+  context: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  cx: number,
+  cy: number,
+  angle: number,
+) => {
+  context.beginPath();
+  context.arc(cx, cy, width / 2, 0.5 * Math.PI, 1.5 * Math.PI, true);
   context.stroke();
 };
 
@@ -712,6 +727,18 @@ const renderBindingHighlightForBindableElement = (
         element.angle,
       );
       break;
+   
+    case "semicircle":{
+      strokeSemiCircleWithRotation(
+        context,
+        width,
+        height,
+        width / 2,
+        height / 2,
+        1.5 * Math.PI,
+      );
+      break;
+    }
     case "ellipse":
       strokeEllipseWithRotation(
         context,

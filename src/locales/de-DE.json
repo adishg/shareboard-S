@@ -146,6 +146,7 @@
     "rectangle": "Rechteck",
     "diamond": "Raute",
     "ellipse": "Ellipse",
+    "semicircle":"Halbkreis",
     "arrow": "Pfeil",
     "line": "Linie",
     "text": "Text",

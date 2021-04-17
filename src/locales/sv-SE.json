@@ -146,6 +146,7 @@
     "rectangle": "Rektangel",
     "diamond": "Diamant",
     "ellipse": "Ellips",
+    "semicircle":"halvcirkel",
     "arrow": "Pil",
     "line": "Linje",
     "text": "Text",

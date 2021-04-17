@@ -3,8 +3,10 @@ import { queries, buildQueries } from "@testing-library/react";
 const toolMap = {
   selection: "selection",
   rectangle: "rectangle",
+  star: "star",
   diamond: "diamond",
   ellipse: "ellipse",
+  semicircle: "semicircle",
   arrow: "arrow",
   line: "line",
   draw: "draw",

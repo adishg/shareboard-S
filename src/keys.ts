@@ -39,6 +39,8 @@ export const KEYS = {
   A: "a",
   D: "d",
   E: "e",
+  F: "f",
+  I: "i",
   L: "l",
   O: "o",
   P: "p",

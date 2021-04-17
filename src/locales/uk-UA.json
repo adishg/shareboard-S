@@ -146,6 +146,7 @@
     "rectangle": "Прямокутник",
     "diamond": "Ромб",
     "ellipse": "Еліпс",
+    "semicircle":"півколо",
     "arrow": "Стрілка",
     "line": "Лінія",
     "text": "Текст",

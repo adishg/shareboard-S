@@ -146,6 +146,7 @@
     "rectangle": "Téglalap",
     "diamond": "Rombusz",
     "ellipse": "Ellipszis",
+    "semicircle":"félkör",
     "arrow": "Nyíl",
     "line": "Vonal",
     "text": "Szöveg",

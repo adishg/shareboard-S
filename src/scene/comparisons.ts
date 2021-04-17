@@ -7,7 +7,10 @@ import { getElementAbsoluteCoords } from "../element";
 
 export const hasBackground = (type: string) =>
   type === "rectangle" ||
+  type === "semicircle" ||
   type === "ellipse" ||
+  type === "semicircle" ||
+  type === "star" ||
   type === "diamond" ||
   type === "draw" ||
   type === "line";
@@ -15,6 +18,8 @@ export const hasBackground = (type: string) =>
 export const hasStroke = (type: string) =>
   type === "rectangle" ||
   type === "ellipse" ||
+  type === "semicircle" ||
+  type === "star" ||
   type === "diamond" ||
   type === "arrow" ||
   type === "draw" ||

@@ -7,6 +7,7 @@ import {
 } from "../element/types";
 import { isTextElement, isLinearElement } from "../element/typeChecks";
 import {
+  getStarPoints,
   getDiamondPoints,
   getElementAbsoluteCoords,
   getArrowheadPoints,
@@ -15,6 +16,7 @@ import { RoughCanvas } from "roughjs/bin/canvas";
 import { Drawable, Options } from "roughjs/bin/core";
 import { RoughSVG } from "roughjs/bin/svg";
 import { RoughGenerator } from "roughjs/bin/generator";
+import { Point } from "roughjs/bin/geometry";
 import { SceneState } from "../scene/types";
 import {
   SVG_NS,
@@ -30,7 +32,8 @@ import { getDefaultAppState } from "../appState";
 import { ignoreNextOnError } from "@sentry/browser/dist/helpers";
 import { LoadingMessage } from "../components/LoadingMessage";
 import "../enums/fileTypes";
-import { FILE_TYPES, SUPPORTED_FILE_FORMAT } from "../enums/fileTypes";
+import { FILE_TYPES } from "../enums/fileTypes";
+
 
 const defaultAppState = getDefaultAppState();
 
@@ -124,7 +127,9 @@ const drawElementOnCanvas = (
   context.globalAlpha = element.opacity / 100;
   switch (element.type) {
     case "rectangle":
+    case "star":
     case "diamond":
+    case "semicircle":
     case "ellipse": {
       rc.draw(getShapeForElement(element) as Drawable);
       break;
@@ -254,7 +259,9 @@ export const generateRoughOptions = (element: ExcalidrawElement): Options => {
 
   switch (element.type) {
     case "rectangle":
+    case "star":
     case "diamond":
+    case "semicircle":
     case "ellipse": {
       options.fillStyle = element.fillStyle;
       options.fill =
@@ -330,7 +337,11 @@ const DrawFileLogo = (
 const isFileTextElement = (name: string) => {
   const fileArray = name.split(".");
   if (
-    SUPPORTED_FILE_FORMAT.indexOf(fileArray[fileArray.length - 1]) !== -1
+    fileArray[fileArray.length - 1] === FILE_TYPES.WORD ||
+    fileArray[fileArray.length - 1] === FILE_TYPES.POWERPOINT ||
+    fileArray[fileArray.length - 1] === FILE_TYPES.ADOBEAB ||
+    fileArray[fileArray.length - 1] === FILE_TYPES.WORD1 ||
+    fileArray[fileArray.length - 1] === FILE_TYPES.POWERPOINT1
   ) {
     return true;
   }
@@ -392,6 +403,26 @@ const generateElementShape = (
         );
         break;
       }
+      case "star": {
+        const pointsAll = getStarPoints(element);
+        shape = generator.polygon(
+          [
+            [pointsAll[0], pointsAll[1]],
+            [pointsAll[2], pointsAll[3]],
+            [pointsAll[4], pointsAll[5]],
+            [pointsAll[6], pointsAll[7]],
+            [pointsAll[8], pointsAll[9]],
+            [pointsAll[10], pointsAll[11]],
+            [pointsAll[12], pointsAll[13]],
+            [pointsAll[14], pointsAll[15]],
+            [pointsAll[16], pointsAll[17]],
+            [pointsAll[18], pointsAll[19]],
+            [pointsAll[20], pointsAll[21]],
+          ],
+          generateRoughOptions(element),
+        );
+        break;
+      }
       case "ellipse":
         shape = generator.ellipse(
           element.width / 2,
@@ -401,6 +432,17 @@ const generateElementShape = (
           generateRoughOptions(element),
         );
         break;
+      case "semicircle":
+        shape = generator.arc(
+          element.width / 2,
+          element.height / 2,
+          element.width,
+          element.height,
+          0.5*Math.PI,
+          1.5*Math.PI,
+          true);
+          
+          break;
       case "line":
       case "draw":
       case "arrow": {
@@ -583,8 +625,10 @@ export const renderElement = (
       break;
     }
     case "rectangle":
+    case "star":
     case "diamond":
     case "ellipse":
+    case "semicircle": 
     case "line":
     case "draw":
     case "arrow":
@@ -638,7 +682,9 @@ export const renderElementToSvg = (
       throw new Error("Selection rendering is not supported for SVG");
     }
     case "rectangle":
+    case "star":
     case "diamond":
+    case "semicircle":
     case "ellipse": {
       generateElementShape(element, generator);
       const node = rsvg.draw(getShapeForElement(element) as Drawable);

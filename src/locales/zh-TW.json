@@ -146,6 +146,7 @@
     "rectangle": "長方形",
     "diamond": "菱形",
     "ellipse": "橢圓",
+    "semicircle":"半圆",
     "arrow": "箭頭",
     "line": "線條",
     "text": "文字",

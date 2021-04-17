@@ -146,6 +146,7 @@
     "rectangle": "Rechthoek",
     "diamond": "Ruit",
     "ellipse": "Ovaal",
+    "semicircle":"halve cirkel",
     "arrow": "Pijl",
     "line": "Lijn",
     "text": "Tekst",

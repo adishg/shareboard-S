@@ -98,7 +98,7 @@ export const Chat: React.FC<ChatProps> = ({ isCollaborating }) => {
 
   const scrollToBottom = () => {
     if (messagesEndRef !== undefined) {
-      messagesEndRef.current!.scrollIntoView({ behavior: "smooth" });
+      // messagesEndRef.current!.scrollIntoView({ behavior: "smooth" });
     }
   };
   return isChatVisible ? renderChatBox() : renderChatButton();

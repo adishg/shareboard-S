@@ -146,6 +146,7 @@
     "rectangle": "Прямоугольник",
     "diamond": "Ромб",
     "ellipse": "Эллипс",
+    "semicircle":"полукруг",
     "arrow": "Cтрелка",
     "line": "Линия",
     "text": "Текст",

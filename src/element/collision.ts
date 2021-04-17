@@ -16,6 +16,8 @@ import {
   ExcalidrawTextElement,
   ExcalidrawEllipseElement,
   NonDeleted,
+  ExcalidrawSemiCircleElement,
+  ExcalidrawStarElement,
 } from "./types";
 
 import { getElementAbsoluteCoords, getCurvePathOps, Bounds } from "./bounds";
@@ -147,7 +149,9 @@ const hitTestPointAgainstElement = (args: HitTestArgs): boolean => {
   switch (args.element.type) {
     case "rectangle":
     case "text":
+    case "star":
     case "diamond":
+    case "semicircle":
     case "ellipse":
       const distance = distanceToBindableElement(args.element, args.point);
       return args.check(distance, args.threshold);
@@ -171,10 +175,14 @@ export const distanceToBindableElement = (
     case "rectangle":
     case "text":
       return distanceToRectangle(element, point);
+    case "star":
+        return distanceToStar(element, point);
     case "diamond":
       return distanceToDiamond(element, point);
     case "ellipse":
       return distanceToEllipse(element, point);
+    case "semicircle":
+      return distanceToSemiCircle(element, point);
   }
 };
 
@@ -214,12 +222,75 @@ const distanceToDiamond = (
   return GAPoint.distanceToLine(pointRel, side);
 };
 
+const distanceToStar = (
+  element: ExcalidrawStarElement,
+  point: Point,
+): number => {
+  const [, pointRel, hwidth, hheight] = pointRelativeToElement(element, point);
+  const side = GALine.equation(hheight, hwidth, -hheight * hwidth);
+  return GAPoint.distanceToLine(pointRel, side);
+};
+
+
 const distanceToEllipse = (
   element: ExcalidrawEllipseElement,
   point: Point,
 ): number => {
   const [pointRel, tangent] = ellipseParamsForTest(element, point);
   return -GALine.sign(tangent) * GAPoint.distanceToLine(pointRel, tangent);
+};
+
+const distanceToSemiCircle = (
+  element: ExcalidrawSemiCircleElement,
+  point: Point,
+): number => {
+  const [pointRel, tangent] = semiCircleParamsForTest(element, point);
+  return -GALine.sign(tangent) * GAPoint.distanceToLine(pointRel, tangent);
+};
+
+const semiCircleParamsForTest = (
+  element: ExcalidrawSemiCircleElement,
+  point: Point,
+): [GA.Point, GA.Line] => {
+  const [, pointRel, hwidth, hheight] = pointRelativeToElement(element, point);
+  const [px, py] = GAPoint.toTuple(pointRel);
+
+  // We're working in positive quadrant, so start with `t = 45deg`, `tx=cos(t)`
+  let tx = 0.707;
+  let ty = 0.707;
+
+  const a = hwidth;
+  const b = hheight;
+
+  // This is a numerical method to find the params tx, ty at which
+  // the ellipse has the closest point to the given point
+  [0, 1, 2, 3].forEach((_) => {
+    const xx = a * tx;
+    const yy = b * ty;
+
+    const ex = ((a * a - b * b) * tx ** 3) / a;
+    const ey = ((b * b - a * a) * ty ** 3) / b;
+
+    const rx = xx - ex;
+    const ry = yy - ey;
+
+    const qx = px - ex;
+    const qy = py - ey;
+
+    const r = Math.hypot(ry, rx);
+    const q = Math.hypot(qy, qx);
+
+    tx = Math.min(1, Math.max(0, ((qx * r) / q + ex) / a));
+    ty = Math.min(1, Math.max(0, ((qy * r) / q + ey) / b));
+    const t = Math.hypot(ty, tx);
+    tx /= t;
+    ty /= t;
+  });
+
+  const closestPoint = GA.point(a * tx, b * ty);
+
+  const tangent = GALine.orthogonalThrough(pointRel, closestPoint);
+  return [pointRel, tangent];
 };
 
 const ellipseParamsForTest = (
@@ -394,9 +465,13 @@ export const determineFocusDistance = (
     case "rectangle":
     case "text":
       return c / (hwidth * (nabs + q * mabs));
+    case "star":
+      return mabs < nabs ? c / (nabs * hwidth) : c / (mabs * hheight);
     case "diamond":
       return mabs < nabs ? c / (nabs * hwidth) : c / (mabs * hheight);
     case "ellipse":
+      return c / (hwidth * Math.sqrt(n ** 2 + q ** 2 * m ** 2));
+    case "semicircle":
       return c / (hwidth * Math.sqrt(n ** 2 + q ** 2 * m ** 2));
   }
 };
@@ -423,11 +498,17 @@ export const determineFocusPoint = (
   switch (element.type) {
     case "rectangle":
     case "text":
+    case "star":
+        point = findFocusPointForRectangulars(element, focus, adjecentPointRel);
+        break;
     case "diamond":
       point = findFocusPointForRectangulars(element, focus, adjecentPointRel);
       break;
     case "ellipse":
       point = findFocusPointForEllipse(element, focus, adjecentPointRel);
+      break;
+    case "semicircle":
+      point = findFocusPointForSemiCircle(element, focus, adjecentPointRel);
       break;
   }
   return GAPoint.toTuple(GATransform.apply(reverseRelateToCenter, point));
@@ -472,6 +553,7 @@ const getSortedElementLineIntersections = (
   switch (element.type) {
     case "rectangle":
     case "text":
+    case "star":
     case "diamond":
       const corners = getCorners(element);
       intersections = corners
@@ -485,6 +567,9 @@ const getSortedElementLineIntersections = (
       break;
     case "ellipse":
       intersections = getEllipseIntersections(element, gap, line);
+      break;
+    case "semicircle":
+      intersections = getSemiCircleIntersections(element, gap, line);
       break;
   }
   if (intersections.length < 2) {
@@ -504,6 +589,7 @@ const getSortedElementLineIntersections = (
 const getCorners = (
   element:
     | ExcalidrawRectangleElement
+    | ExcalidrawStarElement
     | ExcalidrawDiamondElement
     | ExcalidrawTextElement,
   scale: number = 1,
@@ -519,6 +605,7 @@ const getCorners = (
         GA.point(-hx, -hy),
         GA.point(-hx, hy),
       ];
+    case "star":
     case "diamond":
       return [
         GA.point(0, hy),
@@ -556,6 +643,38 @@ const offsetSegment = (
     distance,
   );
   return [GATransform.apply(offset, a), GATransform.apply(offset, b)];
+};
+
+
+
+const getSemiCircleIntersections = (
+  element: ExcalidrawSemiCircleElement,
+  gap: number,
+  line: GA.Line,
+): GA.Point[] => {
+  const a = element.width / 2 + gap;
+  const b = element.height / 2 + gap;
+  const m = line[2];
+  const n = line[3];
+  const c = line[1];
+  const squares = a * a * m * m + b * b * n * n;
+  const discr = squares - c * c;
+  if (squares === 0 || discr <= 0) {
+    return [];
+  }
+  const discrRoot = Math.sqrt(discr);
+  const xn = -a * a * m * c;
+  const yn = -b * b * n * c;
+  return [
+    GA.point(
+      (xn + a * b * n * discrRoot) / squares,
+      (yn - a * b * m * discrRoot) / squares,
+    ),
+    GA.point(
+      (xn - a * b * n * discrRoot) / squares,
+      (yn + a * b * m * discrRoot) / squares,
+    ),
+  ];
 };
 
 const getEllipseIntersections = (
@@ -618,6 +737,41 @@ export const getCircleIntersections = (
 
 // The focus point is the tangent point of the "focus image" of the
 // `element`, where the tangent goes through `point`.
+export const findFocusPointForSemiCircle = (
+  semicircle: ExcalidrawSemiCircleElement,
+  // Between -1 and 1 (not 0) the relative size of the "focus image" of
+  // the element on which the focus point lies
+  relativeDistance: number,
+  // The point for which we're trying to find the focus point, relative
+  // to the semicircle center.
+  point: GA.Point,
+): GA.Point => {
+  const relativeDistanceAbs = Math.abs(relativeDistance);
+  const a = (semicircle.width * relativeDistanceAbs) / 2;
+  const b = (semicircle.height * relativeDistanceAbs) / 2;
+
+  const orientation = Math.sign(relativeDistance);
+  const [px, pyo] = GAPoint.toTuple(point);
+
+  // The calculation below can't handle py = 0
+  const py = pyo === 0 ? 0.0001 : pyo;
+
+  const squares = px ** 2 * b ** 2 + py ** 2 * a ** 2;
+  // Tangent mx + ny + 1 = 0
+  const m =
+    (-px * b ** 2 +
+      orientation * py * Math.sqrt(Math.max(0, squares - a ** 2 * b ** 2))) /
+    squares;
+
+  const n = (-m * px - 1) / py;
+
+  const x = -(a ** 2 * m) / (n ** 2 * b ** 2 + m ** 2 * a ** 2);
+  return GA.point(x, (-m * x - 1) / n);
+};
+
+
+// The focus point is the tangent point of the "focus image" of the
+// `element`, where the tangent goes through `point`.
 export const findFocusPointForEllipse = (
   ellipse: ExcalidrawEllipseElement,
   // Between -1 and 1 (not 0) the relative size of the "focus image" of
@@ -654,6 +808,7 @@ export const findFocusPointForRectangulars = (
   element:
     | ExcalidrawRectangleElement
     | ExcalidrawDiamondElement
+    | ExcalidrawStarElement
     | ExcalidrawTextElement,
   // Between -1 and 1 for how far away should the focus point be relative
   // to the size of the element. Sign determines orientation.

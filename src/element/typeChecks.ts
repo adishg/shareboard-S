@@ -13,8 +13,10 @@ export const isGenericElement = (
     element != null &&
     (element.type === "selection" ||
       element.type === "rectangle" ||
+      element.type === "star" ||
       element.type === "diamond" ||
-      element.type === "ellipse")
+      element.type === "ellipse" ||
+      element.type === "semicircle")
   );
 };
 
@@ -56,18 +58,22 @@ export const isBindableElement = (
   return (
     element != null &&
     (element.type === "rectangle" ||
+      element.type === "star" ||
       element.type === "diamond" ||
       element.type === "ellipse" ||
-      element.type === "text")
+      element.type === "text" ||
+      element.type === "semicircle")
   );
 };
 
 export const isExcalidrawElement = (element: any): boolean => {
   return (
     element?.type === "text" ||
+    element?.type === "star" ||
     element?.type === "diamond" ||
     element?.type === "rectangle" ||
     element?.type === "ellipse" ||
+    element?.type === "semicircle" ||
     element?.type === "arrow" ||
     element?.type === "draw" ||
     element?.type === "line"

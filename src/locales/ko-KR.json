@@ -146,6 +146,7 @@
     "rectangle": "사각형",
     "diamond": "다이아몬드",
     "ellipse": "타원",
+    "semicircle":"반원",
     "arrow": "화살표",
     "line": "선",
     "text": "텍스트",

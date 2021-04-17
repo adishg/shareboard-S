@@ -146,6 +146,7 @@
     "rectangle": "Suorakulmio",
     "diamond": "Vinoneliö",
     "ellipse": "Soikio",
+    "semicircle":"puoliympyrä",
     "arrow": "Nuoli",
     "line": "Viiva",
     "text": "Teksti",

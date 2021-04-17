@@ -146,6 +146,7 @@
     "rectangle": "Retângulo",
     "diamond": "Losango",
     "ellipse": "Elipse",
+    "semicircle":"semicírculo",
     "arrow": "Flecha",
     "line": "Linha",
     "text": "Texto",
